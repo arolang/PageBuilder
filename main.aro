@@ -1,0 +1,314 @@
+(*
+ * PageBuilder — a YAML-driven static site generator.
+ *
+ * USAGE
+ *   aro run ./PageBuilder --input ./pages
+ *   aro run ./PageBuilder --input ./pages --watch true
+ *
+ * INPUT
+ *   Each .yaml file describes a page as a tree of nodes. Every node names
+ *   a template from ./templates/ (the bare name, no extension — `page_base`
+ *   resolves to `./templates/page_base.html`) and may carry arbitrary
+ *   parameters plus an "elements:" list of child nodes.
+ *
+ * OUTPUT
+ *   For every input.yaml file a sibling input.html is written, preserving
+ *   the input directory structure.
+ *
+ * TEMPLATES
+ *   Each template runs with two variables in scope:
+ *     <el>     — the YAML node, fields readable as {{ <el: fieldName> }}
+ *     <inner>  — the rendered HTML of all child elements (joined)
+ *   A leaf template simply ignores <inner>.
+ *)
+
+
+(* ── Entry point ──────────────────────────────────────────────────────── *)
+
+(Application-Start: PageBuilder) {
+    Create  the <defaults> with { input: ".", output: "./output", watch: false }.
+    Extract the <raw>      from the <parameter>.
+    Merge   the <opts: defaults> with <raw>.
+
+    Extract the <input-dir>  from the <opts: input>.
+    Extract the <output-dir> from the <opts: output>.
+    Extract the <watch-flag> from the <opts: watch>.
+
+    Log "PageBuilder building ${<input-dir>} -> ${<output-dir>}" to the <console>.
+
+    Make the <out-dir-created> at the <path: output-dir>.
+
+    (* Site-wide defaults: keys defined in <input>/_site.yaml are merged
+     * into every page's root data before rendering. Per-page yaml fields
+     * still override the matching site-wide value. *)
+    Compute the <site-path>   from <input-dir> ++ "/_site.yaml".
+    Exists  the <site-exists> for the <file: site-path>.
+    match <site-exists> {
+        case true  { Read   the <site-data> from the <file: site-path>. }
+        case false { Create the <site-data> with {}. }
+    }
+
+    Application.BuildAll the <built> with {
+        dir: <input-dir>, src_root: <input-dir>, dst_root: <output-dir>,
+        site: <site-data>
+    }.
+
+    Log "Watching ${<input-dir>} (Ctrl+C to stop)" to the <console>
+        when <watch-flag> is true.
+    Start the <file-monitor> with <input-dir>
+        when <watch-flag> is true.
+    Keepalive the <application> for the <events>
+        when <watch-flag> is true.
+
+    Return an <OK: status> for the <startup>.
+}
+
+
+(* ── Walk the input directory and emit one BuildOne event per yaml ────── *)
+
+(BuildAll: Action) {
+    Extract the <dir>      from the <input: dir>.
+    Extract the <src-root> from the <input: src_root>.
+    Extract the <dst-root> from the <input: dst_root>.
+    Extract the <site>     from the <input: site>.
+
+    List the <entries: recursively> from the <directory: dir>.
+
+    (* Drive every input through the right handler:
+     *   .yaml / .yml / .json  → render through the template engine
+     *   anything under _static/  → copy verbatim, preserving relative path
+     * Files whose basename starts with `_` (e.g. _site.yaml) are config,
+     * not pages, and are skipped here. *)
+    for each <entry> in <entries> where <entry: isDirectory> is false {
+        Extract the <path>      from the <entry: path>.
+        Split   the <parts>     from the <path> by /\./.
+        Extract the <ext: last> from the <parts>.
+
+        Split   the <path-segs>     from the <path>  by /\//.
+        Extract the <basename: last> from the <path-segs>.
+        Split   the <prefix-parts>  from the <basename> by /^_/.
+        Compute the <config-flag: length> from <prefix-parts>.
+
+        Split   the <static-parts> from the <path> by /\/_static\//.
+        Compute the <static-pieces: length> from <static-parts>.
+
+        match <static-pieces> {
+            case 2 {
+                Emit a <CopyAsset: event>
+                    with { path: <path>, src_root: <src-root>, dst_root: <dst-root>, site: <site> }.
+            }
+            otherwise {
+                match <config-flag> {
+                    case 2 { (* basename began with `_` — config file, skip *) }
+                    otherwise {
+                        (* yaml / yml / json all hit the template engine *)
+                        match <ext> {
+                            case /ya?ml|json/ {
+                                Emit a <BuildOne: event>
+                                    with { path: <path>, src_root: <src-root>, dst_root: <dst-root>, site: <site> }.
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    Return an <OK: status> with { built: true }.
+}
+
+
+(* ── Copy a single asset from <src-root>/_static/foo/bar  to  <dst-root>/foo/bar ── *)
+
+(Copy Static Asset: CopyAsset Handler) {
+    Extract the <src>      from the <event: path>.
+    Extract the <dst-root> from the <event: dst_root>.
+
+    (* Take the path tail after `/_static/` — that's the rel path under the output *)
+    Split   the <after-static> from the <src> by /\/_static\//.
+    Extract the <rel: last>    from the <after-static>.
+    Compute the <dst>          from <dst-root> ++ "/" ++ <rel>.
+
+    Split   the <dir-parts>      from the <dst> by /\/[^\/]+$/.
+    Extract the <dst-dir: first> from the <dir-parts>.
+    Make the <dir-created> at the <path: dst-dir>.
+
+    Read  the <bytes: raw> from the <file: src>.
+    Write the <bytes: raw> to   the <file: dst>.
+
+    Log "  copied ${<rel>}" to the <console>.
+    Return an <OK: status> with { copied: <dst> }.
+}
+
+
+(* ── Render one yaml file into its html sibling ───────────────────────── *)
+
+(Build Page: BuildOne Handler) {
+    Extract the <yaml-path> from the <event: path>.
+    Extract the <src-root>  from the <event: src_root>.
+    Extract the <dst-root>  from the <event: dst_root>.
+    Extract the <site>      from the <event: site>.
+
+    (* Format-aware Read parses YAML based on the file extension *)
+    Read the <page-data> from the <file: yaml-path>.
+
+    (* Merge order: defaults <- site <- page. Page yaml overrides site,
+     * site overrides built-in defaults. *)
+    Create the <page-defaults>        with { passthrough_from: "", output_ext: "html" }.
+    Merge  the <site-merged: page-defaults> with <site>.
+    Merge  the <root-el:    site-merged>   with <page-data>.
+
+    Extract the <passthrough> from the <root-el: passthrough_from>.
+    Extract the <out-ext>     from the <root-el: output_ext>.
+
+    (* Compute output path under <dst-root>. We currently flatten the
+     * input layout — pages/foo.yaml and pages/blog/foo.yaml both land as
+     * <dst-root>/foo.<ext>. Extending this to mirror nested input
+     * subdirectories is a small follow-up. *)
+    Split   the <path-parts>   from the <yaml-path> by /\//.
+    Extract the <filename: last>  from the <path-parts>.
+    Split   the <name-parts>   from the <filename> by /\.[^.]+$/.
+    Extract the <stem: first>  from the <name-parts>.
+    Compute the <out-path>     from <dst-root> ++ "/" ++ <stem> ++ "." ++ <out-ext>.
+
+    (* Passthrough mode: copy the named file under templates/ verbatim, no
+     * template parsing. Use this for pages whose body contains literal
+     * `{{ }}` text that would otherwise be interpreted as template syntax. *)
+    match <passthrough> {
+        case "" {
+            Compute the <tmp-base> from "/tmp/pagebuilder" ++ <yaml-path>.
+
+            Application.RenderElement the <rendered>
+                with { el: <root-el>, tmp: <tmp-base>, root: <root-el> }.
+            Extract the <html> from the <rendered: html>.
+
+            Write the <html: raw> to the <file: out-path>.
+        }
+        otherwise {
+            Compute the <src> from "./templates/" ++ <passthrough>.
+            Read    the <verbatim: raw> from the <file: src>.
+            Write   the <verbatim: raw> to the <file: out-path>.
+        }
+    }
+
+    Log "  wrote ${<out-path>}" to the <console>.
+
+    Return an <OK: status> with { path: <out-path> }.
+}
+
+
+(* ── Recursive element renderer ───────────────────────────────────────── *)
+(*
+ * Renders <el>'s children depth-first, joins their HTML through a temp
+ * file (ARO bindings are immutable, so we accumulate via Append rather
+ * than rebinding a string variable). Then renders <el>'s own template
+ * with <el> and <inner> in scope.
+ *)
+
+(RenderElement: Action) {
+    Extract the <raw-el>   from the <input: el>.
+    Extract the <tmp-base> from the <input: tmp>.
+    Extract the <root>     from the <input: root>.
+
+    (* Provide defaults so leaf templates and shells don't blow up on
+     * fields the yaml didn't set.
+     *   - elements:   leaf nodes have no children
+     *   - extra_head: pages without per-page head content yield empty *)
+    Create the <defaults> with {
+        elements: [], extra_head: "",
+        links: [], buttons: [], cards: [], columns: []
+    }.
+    Merge  the <el: defaults> with <raw-el>.
+
+    Extract the <children>            from the <el: elements>.
+    Compute the <child-count: length> from <children>.
+
+    (* If the tpl name already carries an extension (e.g. styles.css),
+     * use it verbatim — otherwise append .html. *)
+    Extract the <tpl-name>   from the <el: tpl>.
+    Split   the <tpl-parts>  from the <tpl-name> by /\./.
+    Compute the <tpl-pieces: length> from <tpl-parts>.
+    match <tpl-pieces> {
+        case 1 { Compute the <tpl-path> from <tpl-name> ++ ".html". }
+        otherwise { Create the <tpl-path> with <tpl-name>. }
+    }
+
+    match <child-count> {
+        case 0 {
+            (* Leaf fast-path: empty <inner>, no /tmp roundtrip, no per-
+             * iteration Append. Most YAML nodes are leaves, so this is
+             * the dominant render path. *)
+            Create    the <inner> with "".
+            Transform the <html>  from the <template: tpl-path>.
+            Return    an  <OK: status> with { html: <html> }.
+        }
+        otherwise {
+            (* Branch path: pre-render children depth-first into a per-
+             * frame temp file (ARO bindings are immutable). Each child
+             * call gets its own kid-tmp prefix so recursive calls cannot
+             * clobber one another. *)
+            Compute the <inner-file> from <tmp-base> ++ ".inner".
+            Write   "" to the <file: inner-file>.
+
+            for each <child> at <idx> in <children> {
+                Compute the <kid-tmp> from <tmp-base> ++ "." ++ <idx>.
+
+                Application.RenderElement the <kid>
+                    with { el: <child>, tmp: <kid-tmp>, root: <root> }.
+
+                Extract the <kid-html> from the <kid: html>.
+
+                Append the <chunk: raw> to the <file: inner-file> with <kid-html>.
+            }
+
+            Read      the <inner: raw> from the <file: inner-file>.
+            Transform the <html>       from the <template: tpl-path>.
+
+            Return an <OK: status> with { html: <html> }.
+        }
+    }
+
+    Return an <OK: status> with { html: "" }.
+}
+
+
+(* ── Watch-mode handler ───────────────────────────────────────────────── *)
+
+(Rebuild Changed YAML: File Event Handler) {
+    Extract the <path>       from the <event: path>.
+
+    Create  the <defaults>    with { input: ".", output: "./output" }.
+    Extract the <raw>         from the <parameter>.
+    Merge   the <opts: defaults> with <raw>.
+    Extract the <src-root>    from the <opts: input>.
+    Extract the <dst-root>    from the <opts: output>.
+
+    (* Re-read _site.yaml on every change so edits to it propagate too *)
+    Compute the <site-path>   from <src-root> ++ "/_site.yaml".
+    Exists  the <site-exists> for the <file: site-path>.
+    match <site-exists> {
+        case true  { Read   the <site> from the <file: site-path>. }
+        case false { Create the <site> with {}. }
+    }
+
+    Split   the <name-parts> from the <path> by /\./.
+    Extract the <ext: last>  from the <name-parts>.
+
+    match <ext> {
+        case /ya?ml|json/ {
+            Log "change: ${<path>}" to the <console>.
+            Emit a <BuildOne: event>
+                with { path: <path>, src_root: <src-root>, dst_root: <dst-root>, site: <site> }.
+        }
+    }
+
+    Return an <OK: status> for the <event>.
+}
+
+
+(* ── Graceful shutdown ────────────────────────────────────────────────── *)
+
+(Application-End: Success) {
+    Log "PageBuilder stopped." to the <console>.
+    Return an <OK: status> for the <shutdown>.
+}
