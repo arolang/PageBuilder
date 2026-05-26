@@ -1,0 +1,163 @@
+title: Motivation & Disclaimer - ARO Programming Language
+
+nav_links:
+  - href: fdd.html
+    label: The FDD Story
+  - href: getting-started.html
+    label: Get Started
+  - href: tutorial.html
+    label: Tutorial
+  - href: showcase.html
+    label: Showcase
+  - href: docs.html
+    label: Docs
+  - href: disclaimer.html
+    label: Motivation
+    class_attr: ' style="color: var(--color-text);"'
+  - href: download.html
+    label: Download
+
+mobile_links:
+  - href: fdd.html
+    label: The FDD Story
+  - href: getting-started.html
+    label: Get Started
+  - href: tutorial.html
+    label: Tutorial
+  - href: showcase.html
+    label: Showcase
+  - href: docs.html
+    label: Docs
+  - href: disclaimer.html
+    label: Motivation
+  - href: download.html
+    label: Download
+
+# ── Page composition: every block is an element. Sections iterate
+#    instead of being hardcoded happy_path_*/fits_*/etc. fields.
+tpl: shells/disclaimer
+elements:
+  - tpl: organisms/nav
+  - tpl: organisms/mobile_menu
+  - tpl: organisms/subpage_hero
+    hero_heading: Motivation
+    hero_tail: "& Disclaimer"
+    hero_lead: |-
+      Why we built a programming language by talking to an AI about programming languages.
+                  Yes, it's exactly as recursive as it sounds.
+  - tpl: organisms/page_content
+    elements:
+      - tpl: molecules/motivation_section
+        icon: "&#x1F512;"
+        title: The Power of Constraints
+        extra_class: ""
+        body: |
+          Every programmer eventually discovers a counterintuitive truth: **sometimes the best code is the code you couldn't write.**
+
+          General-purpose languages like Python, JavaScript, and Go are magnificent tools. They let you express almost anything. But "almost anything" is precisely the problem. When a language permits infinite variation, every codebase becomes a unique dialect.
+
+          ARO takes a different path. It deliberately limits what you can express. No arbitrary control flow. No exception handling. A fixed grammar with a small set of verbs, and a commitment to the happy path. This design philosophy has historical precedent:
+
+          **SQL** (1974): You can't write loops. You describe *what* you want. Result: the most successful data language in history. **Make** (1976): You declare dependencies, not control flow. Result: still building software 50 years later. **Terraform** (2014): You declare desired state. Result: infrastructure-as-code became an industry. **Dhall** (2016): You can't write Turing-complete programs. Result: configuration that actually validates.
+
+          These languages succeeded *because* of their constraints, not despite them. When a language says "no" to complexity, it creates space for clarity.
+      - tpl: molecules/motivation_section
+        icon: "&#x1F4D6;"
+        title: Code That Reads Like Documentation
+        extra_class: " accent-cyan"
+        body: |
+          ARO's fixed grammar—`Action the <Result> preposition the <Object>`—means every statement follows the same structure. There's no style guide debate. The grammar *is* the style guide.
+
+          A business analyst can read this. A compliance officer can audit it. A new developer can understand it in seconds. The code *is* the documentation.
+
+          A team of five developers writing ARO will produce code that looks like it was written by one person. A team of five developers writing TypeScript will produce five dialects.
+      - tpl: molecules/quote_block
+        text: The most powerful thing a language can do is say no.
+        attribution: The ARO Philosophy
+      - tpl: molecules/motivation_section
+        icon: "&#x2728;"
+        title: The Happy Path Philosophy
+        extra_class: " accent-green"
+        body: |
+          ARO code contains only the success case. You write what should happen when everything works. The runtime handles errors, reporting them in business terms: *"Cannot retrieve the user from the user-repository where id = 530."*
+
+          This isn't naive optimism—it's a deliberate trade-off. Consider the bug equation:
+
+          Bugs ∝ (API Surface) × (Complexity) × (Mutability)
+
+          ARO attacks all three factors: **Smaller API surface**—55 actions vs. infinite function possibilities. **Reduced complexity**—no control flow means fewer execution paths. **Limited mutability**—actions transform and return; they don't mutate shared state.
+
+          A typical Express.js endpoint might span 500 lines with request parsing, authentication, validation, error handling, logging. Each conditional doubles the test matrix. The equivalent ARO feature set might be 15 lines. The test matrix is manageable.
+      - tpl: molecules/motivation_section
+        icon: "&#x1F3AF;"
+        title: Where ARO Fits
+        extra_class: " accent-pink"
+        elements:
+          - tpl: molecules/paragraph
+            html: |-
+              Not every domain is equally suited to ARO's constraints. Here's an honest assessment:
+          - tpl: organisms/vision_grid
+            elements:
+              - tpl: molecules/vision_card
+                icon: "&#x2705;"
+                title: Excellent
+                text: "<strong>Business Logic &amp; CRUD APIs.</strong> ARO's natural home. Extract, validate, transform, persist, return."
+              - tpl: molecules/vision_card
+                icon: "&#x2705;"
+                title: Good
+                text: "<strong>DevOps &amp; Infrastructure.</strong> Declarative actions map well to infrastructure verbs."
+              - tpl: molecules/vision_card
+                icon: "&#x26A0;"
+                title: Not Ideal
+                text: "<strong>Real-time systems.</strong> Microsecond precision requires low-level control."
+              - tpl: molecules/vision_card
+                icon: "&#x274C;"
+                title: Look Elsewhere
+                text: "<strong>Algorithmic work &amp; ML.</strong> Iteration and exploration are fundamental."
+          - tpl: molecules/paragraph
+            html: |-
+              The trade-off favors constraints when: team size exceeds 5, regulatory environments demand
+                              auditability, systems are long-lived, or AI agents will modify the code.
+      - tpl: molecules/section_divider
+        text: Now for the serious part
+      - tpl: molecules/warning_banner
+        icon: "&#x26A0;"
+        title: Experimental Project
+        text: |-
+          ARO is an experimental programming language. It is absolutely, positively,
+                          definitely not intended for production use. We cannot stress this enough.
+      - tpl: molecules/disclaimer_section
+        icon: "&#x1F9EA;"
+        title: Experimentation Only
+        text: ARO exists for experimentation, learning, and exploring ideas. It's a proof-of-concept for AI-native language development. Use it to learn, experiment, and have fun—but not for anything where bugs would cause actual problems.
+      - tpl: molecules/disclaimer_section
+        icon: "&#x1F916;"
+        title: 100% AI-Generated
+        text: Every single line of code in this project—the compiler, runtime, documentation, and this very website—has been generated entirely by AI. The parser, semantic analyzer, execution engine, HTTP server... all of it. It's AI all the way down.
+      - tpl: molecules/disclaimer_section
+        icon: "&#x1F440;"
+        title: No Human Code Review
+        text: The AI-generated code has not undergone formal human code review. While it functions and demonstrates the intended concepts, it has not been audited for security vulnerabilities, edge cases, or production-readiness. There may be bugs. There probably are bugs.
+      - tpl: molecules/disclaimer_section
+        icon: "&#x1F6AB;"
+        title: Not for Production
+        text: Do not use ARO for production applications, sensitive data, financial systems, healthcare applications, or any use case where reliability, security, or correctness is critical. We mean it. Please.
+      - tpl: organisms/key_points
+        elements:
+          - tpl: molecules/key_point
+            icon: "&#x2705;"
+            title: Great For
+            text: Learning about language design, exploring AI-native programming concepts, understanding FDD principles, experimenting with new ideas, and having fun with code.
+          - tpl: molecules/key_point
+            icon: "&#x274C;"
+            title: Not Great For
+            text: Anything that matters. Production systems. Your startup. Your job. Your bank account. Your reputation. You get the idea.
+      - tpl: molecules/final_note
+        title: Use at Your Own Risk (But Definitely Use It)
+        text: |-
+          By using ARO, you acknowledge this is an experimental project with no warranties.
+                          But also: experiments are how progress happens. So dive in, break things, and let us know
+                          what you discover. Just don't put it in production.
+  - tpl: atoms/progress_bar
+  - tpl: organisms/footer
+  - tpl: atoms/animation_scripts

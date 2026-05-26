@@ -1,0 +1,44 @@
+    <section class="examples-section">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">
+                See ARO <span class="accent">in Action</span>
+            </h2>
+            <p class="section-subtitle animate-on-scroll">
+                Real examples that show how ARO makes complex tasks simple.
+            </p>
+
+            <div class="example-showcase animate-on-scroll">
+                <div class="code-window">
+                    <div class="code-header">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                        <span class="code-title">weather-client.aro</span>
+                    </div>
+                    <pre class="code-content"><span class="comment">(* Fetch weather data from an external API *)</span>
+<span class="feature-name">(Application-Start: Weather Client)</span> {
+    <span class="action">Log</span> <span class="string">"Fetching weather..."</span> to the <span class="result">&lt;console&gt;</span>.
+    <span class="action">Create</span> the <span class="result">&lt;api-url&gt;</span> with <span class="string">"https://api.open-meteo.com/v1/forecast?latitude=52.52&amp;longitude=13.41&amp;current_weather=true"</span>.
+    <span class="action">Request</span> the <span class="result">&lt;weather&gt;</span> from the <span class="result">&lt;api-url&gt;</span>.
+    <span class="action">Log</span> <span class="result">&lt;weather&gt;</span> to the <span class="result">&lt;console&gt;</span>.
+    <span class="action">Return</span> an <span class="result">&lt;OK: status&gt;</span> for the <span class="result">&lt;startup&gt;</span>.
+}</pre>
+                </div>
+                <div class="example-description">
+                    <h3>HTTP Client</h3>
+                    <p>
+                        The <code>Request</code> action fetches from external APIs.
+                        Use <code>from</code> for GET, <code>to</code> for POST, PUT, or DELETE.
+                        JSON responses are parsed automatically.
+                    </p>
+                    <div class="example-features">
+                        <span class="feature-tag">GET/POST/PUT/DELETE</span>
+                        <span class="feature-tag">Auto JSON</span>
+                        <span class="feature-tag">Headers</span>
+                    </div>
+                    <a href="docs/http-services.html" class="example-link">Learn more &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+

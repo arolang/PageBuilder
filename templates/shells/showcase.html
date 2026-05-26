@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ <el: title> }}</title>
+{{ Include the <result> from the <template: atoms/head_meta.html>. }}
+    <style>
+        /* Showcase-specific styles (extends subpage.css) */
+        .showcase-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        .showcase-card {
+            background: var(--color-bg-alt);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            align-items: stretch;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 32px;
+        }
+
+        .showcase-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .showcase-card-image {
+            width: 480px;
+            object-fit: contain;
+            display: block;
+            flex-shrink: 0;
+            border-right: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .showcase-card-body {
+            padding: 32px 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .showcase-card-body h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--color-text);
+        }
+
+        .showcase-card-body p {
+            font-size: 1rem;
+            color: var(--color-text-muted);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .showcase-card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--color-emerald);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: opacity 0.2s;
+        }
+
+        .showcase-card-link:hover {
+            text-decoration: underline;
+        }
+
+        .showcase-card-link svg {
+            width: 16px;
+            height: 16px;
+        }
+
+
+        @media (max-width: 768px) {
+            .showcase-card {
+                flex-direction: column;
+            }
+
+            .showcase-card-image {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            }
+        }
+
+        /* Light mode overrides */
+        @media (prefers-color-scheme: light) {
+            .showcase-card {
+                border: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            .showcase-card-image {
+                border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            }
+        }
+    </style>
+</head>
+<body>
+{{ <inner> }}</body>
+</html>

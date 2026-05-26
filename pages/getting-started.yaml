@@ -1,0 +1,197 @@
+title: Get Started - ARO Programming Language
+
+nav_links:
+  - href: fdd.html
+    label: The FDD Story
+  - href: getting-started.html
+    label: Get Started
+    class_attr: ' style="color: var(--color-text);"'
+  - href: tutorial.html
+    label: Tutorial
+  - href: showcase.html
+    label: Showcase
+  - href: docs.html
+    label: Docs
+  - href: disclaimer.html
+    label: Motivation
+  - href: download.html
+    label: Download
+
+mobile_links:
+  - href: fdd.html
+    label: The FDD Story
+  - href: getting-started.html
+    label: Get Started
+  - href: tutorial.html
+    label: Tutorial
+  - href: showcase.html
+    label: Showcase
+  - href: docs.html
+    label: Docs
+  - href: disclaimer.html
+    label: Motivation
+  - href: download.html
+    label: Download
+
+# ── Page composition: every block is an element. Steps iterate instead
+#    of being hardcoded step1_*/step2_*/… fields.
+tpl: shells/getting-started
+elements:
+  - tpl: organisms/nav
+  - tpl: organisms/mobile_menu
+  - tpl: organisms/subpage_hero_inline
+    hero_prefix: "Get Started with "
+    hero_heading: ARO
+    hero_lead: "Build your first API in 5 minutes. No magic required—just features."
+  - tpl: organisms/guide_main
+    elements:
+      - tpl: organisms/guide_step
+        number: 1
+        title: Create Your Project
+        elements:
+          - tpl: molecules/paragraph
+            html: |-
+              An ARO application is simply a folder containing <code>.aro</code> files and an
+                            <code>openapi.yaml</code> contract. Let's create a Hello World API.
+          - tpl: molecules/terminal
+            command: mkdir HelloWorldAPI && cd HelloWorldAPI
+          - tpl: molecules/paragraph
+            html: "Your project structure will look like this:"
+          - tpl: molecules/file_tree
+            entries:
+              - class: folder
+                label: "&#x1F4C1; HelloWorldAPI/"
+              - class: file-yaml indent-1
+                label: "&#x1F4C4; openapi.yaml"
+              - class: file-aro indent-1
+                label: "&#x1F4DC; main.aro"
+              - class: file-aro indent-1
+                label: "&#x1F4DC; hello.aro"
+      - tpl: organisms/guide_step
+        number: 2
+        title: Define Your API Contract
+        elements:
+          - tpl: molecules/paragraph
+            html: |-
+              ARO uses <strong>contract-first development</strong>. Your <code>openapi.yaml</code> defines
+                            what endpoints exist. The <code>operationId</code> maps directly to your ARO feature sets.
+          - tpl: molecules/code_block
+            title: openapi.yaml
+            code: |-
+              <span class="keyword">openapi:</span> <span class="string">3.0.3</span>
+              <span class="keyword">info:</span>
+                <span class="keyword">title:</span> <span class="string">Hello World API</span>
+                <span class="keyword">version:</span> <span class="string">1.0.0</span>
+
+              <span class="keyword">servers:</span>
+                - <span class="keyword">url:</span> <span class="string">http://localhost:8000</span>
+
+              <span class="keyword">paths:</span>
+                <span class="string">/hello:</span>
+                  <span class="keyword">get:</span>
+                    <span class="keyword">operationId:</span> <span class="result">sayHello</span>  <span class="comment"># &larr; This maps to your ARO feature set!</span>
+                    <span class="keyword">summary:</span> <span class="string">Say Hello</span>
+                    <span class="keyword">responses:</span>
+                      <span class="string">'200':</span>
+                        <span class="keyword">description:</span> <span class="string">A friendly greeting</span>
+          - tpl: molecules/tip
+            title: "&#x1F4A1; Key Insight"
+            html: |-
+              The <code>operationId</code> is the bridge between your API and your code.
+                                <code>sayHello</code> in the contract means you need a feature set named <code>sayHello</code>.
+      - tpl: organisms/guide_step
+        number: 3
+        title: Write Your Application Entry Point
+        elements:
+          - tpl: molecules/paragraph
+            html: |-
+              Every ARO application needs exactly one <code>Application-Start</code> feature set.
+                            This is where your application begins.
+          - tpl: molecules/code_block
+            title: main.aro
+            code: |-
+              <span class="comment">(* Application Entry Point *)</span>
+
+              <span class="feature">(Application-Start: Hello World API)</span> {
+                  <span class="comment">(* Log a startup message *)</span>
+                  <span class="action">Log</span> <span class="string">"Starting server..."</span> to the <span class="result">&lt;console&gt;</span>.
+
+                  <span class="comment">(* Start the HTTP server with the OpenAPI contract *)</span>
+                  <span class="action">Start</span> the <span class="result">&lt;http-server&gt;</span> with <span class="result">&lt;contract&gt;</span>.
+
+                  <span class="comment">(* Keep the application running to process HTTP requests *)</span>
+                  <span class="action">Keepalive</span> the <span class="result">&lt;application&gt;</span> for the <span class="result">&lt;events&gt;</span>.
+
+                  <span class="comment">(* Return OK to indicate successful startup *)</span>
+                  <span class="action">Return</span> an <span class="result">&lt;OK: status&gt;</span> for the <span class="result">&lt;startup&gt;</span>.
+              }
+      - tpl: organisms/guide_step
+        number: 4
+        title: Create Your Feature Handler
+        elements:
+          - tpl: molecules/paragraph
+            html: |-
+              Now create the feature set that handles your API endpoint.
+                            Remember: the feature set name must match the <code>operationId</code> from your contract.
+          - tpl: molecules/code_block
+            title: hello.aro
+            code: |-
+              <span class="comment">(* Handler for GET /hello *)</span>
+              <span class="comment">(* Feature set name matches operationId from openapi.yaml *)</span>
+
+              <span class="feature">(sayHello: Greeting API)</span> {
+                  <span class="comment">(* Create our greeting message *)</span>
+                  <span class="action">Create</span> the <span class="result">&lt;greeting&gt;</span> with <span class="string">"Hello, World!"</span>.
+
+                  <span class="comment">(* Return it as a successful response *)</span>
+                  <span class="action">Return</span> an <span class="result">&lt;OK: status&gt;</span> with <span class="result">&lt;greeting&gt;</span>.
+              }
+          - tpl: molecules/tip
+            title: "&#x1F3AF; The ARO Pattern"
+            html: |-
+              Every statement follows: <strong>Action</strong> the <strong>&lt;Result&gt;</strong>
+                                <em>preposition</em> the <strong>&lt;Object&gt;</strong>.<br>
+                                It reads like English because it <em>is</em> English—structured for machines.
+      - tpl: organisms/guide_step
+        number: 5
+        title: Run Your Application
+        elements:
+          - tpl: molecules/paragraph
+            html: "Check your syntax, then run your application:"
+          - tpl: molecules/terminal
+            command: aro check ./HelloWorldAPI
+            elements:
+              - tpl: molecules/terminal_output
+                text: "&#x2705; No errors found in 2 file(s)"
+          - tpl: molecules/terminal
+            command: aro run ./HelloWorldAPI
+            elements:
+              - tpl: molecules/terminal_output
+                text: "Starting server...\nServer running at http://localhost:8000"
+          - tpl: molecules/paragraph
+            html: "Test your API:"
+          - tpl: molecules/terminal
+            command: curl http://localhost:8000/hello
+            elements:
+              - tpl: molecules/terminal_output
+                text: '{"message": "Hello, World!"}'
+          - tpl: molecules/paragraph
+            html: "&#x1F389; <strong>That's it!</strong> You've built your first ARO application."
+      - tpl: organisms/next_steps
+        heading: What's Next?
+        intro: |-
+          You've just scratched the surface. ARO can handle complex APIs,
+                        event-driven architectures, and AI-assisted development.
+        buttons:
+          - href: docs.html
+            class: btn btn-primary
+            label: Read the Docs
+          - href: fdd.html
+            class: btn btn-secondary
+            label: Learn About FDD
+          - href: 'https://github.com/arolang/aro/releases/latest/download/ARO-Language-Guide.pdf'
+            class: btn btn-secondary
+            label: The Language Guide
+  - tpl: atoms/progress_bar
+  - tpl: organisms/footer
+  - tpl: atoms/animation_scripts

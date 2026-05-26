@@ -1,0 +1,20 @@
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">
+                {{ <root: features_title> }}
+            </h2>
+            <p class="section-subtitle animate-on-scroll">
+                {{ <root: features_subtitle> }}
+            </p>
+
+            <div class="feature-cards">
+{{ for each <card> in <root: feature_cards> { }}                <div class="feature-card animate-on-scroll stagger-{{ <card: stagger> }}">
+                    <div class="card-icon">{{ <card: icon> }}</div>
+                    <h3>{{ <card: title> }}</h3>
+                    <p>{{ <card: text> }}</p>
+                    <code>{{ <card: code> }}</code>
+                </div>
+{{ } }}            </div>
+        </div>
+    </section>
+

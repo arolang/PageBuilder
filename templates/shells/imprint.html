@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ <el: title> }}</title>
+{{ Include the <result> from the <template: atoms/head_meta.html>. }}
+    <style>
+        .imprint-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--space-2xl) var(--space-lg);
+        }
+
+        .imprint-content h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: var(--space-xl) 0 var(--space-md);
+            color: var(--color-text);
+        }
+
+        .imprint-content h2:first-of-type {
+            margin-top: 0;
+        }
+
+        .imprint-content p {
+            font-size: 1.05rem;
+            color: var(--color-text-muted);
+            line-height: 1.8;
+            margin-bottom: var(--space-md);
+        }
+
+        .imprint-content a {
+            color: var(--color-accent);
+            text-decoration: none;
+        }
+
+        .imprint-content a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-info {
+            background: var(--color-bg-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: var(--space-lg);
+            margin: var(--space-lg) 0;
+        }
+
+        .contact-info p {
+            margin-bottom: var(--space-sm);
+        }
+
+        .contact-info p:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+{{ <inner> }}</body>
+</html>

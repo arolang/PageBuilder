@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Sockets - ARO Programming Language</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ARO - The programming language where features become code. Built for humans, perfected for AI.">
+    <!-- Open Graph / Social Share -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://arolang.github.io/aro/">
+    <meta property="og:title" content="ARO - The Language AI Was Waiting For">
+    <meta property="og:description" content="ARO is the programming language where features become code. Built for humans. Perfected for AI.">
+    <meta property="og:image" content="https://arolang.github.io/aro/social.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ARO - The Language AI Was Waiting For">
+    <meta name="twitter:description" content="ARO is the programming language where features become code. Built for humans. Perfected for AI.">
+    <meta name="twitter:image" content="https://arolang.github.io/aro/social.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../animations.css">
+    <link rel="stylesheet" href="../subpage.css">
+    <!-- Matomo -->
+    <script>
+        var _paq = window._paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function() {
+            var u="//matomo.benjamin.ausdertechnik.de/";
+            _paq.push(['setTrackerUrl', u+'matomo.php']);
+            _paq.push(['setSiteId', '4']);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+        })();
+    </script>
+    <!-- End Matomo Code -->
+
+    <style>
+        .doc-page { padding: 120px 24px 80px; max-width: 900px; margin: 0 auto; }
+        .doc-header { margin-bottom: 48px; }
+        .doc-header h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; margin-bottom: 16px; letter-spacing: -0.02em; }
+        .doc-header .lead { font-size: 1.25rem; color: var(--color-text-muted); line-height: 1.7; }
+        .doc-page h2 { font-size: 1.8rem; font-weight: 600; margin: 48px 0 16px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .doc-page h3 { font-size: 1.3rem; font-weight: 600; margin: 32px 0 12px; color: var(--color-secondary); }
+        .doc-page p { font-size: 1.1rem; color: var(--color-text-muted); line-height: 1.8; margin-bottom: 16px; }
+        .doc-page code { font-family: var(--font-mono); background: var(--color-bg-alt); padding: 3px 8px; border-radius: 4px; font-size: 0.9rem; color: var(--color-secondary); }
+        .doc-page pre { background: var(--color-bg-alt); border-radius: var(--radius-md); padding: 24px; overflow-x: auto; margin: 24px 0; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .doc-page pre code { background: none; padding: 0; font-size: 0.9rem; line-height: 1.7; color: var(--color-text); }
+        .doc-page ul, .doc-page ol { color: var(--color-text-muted); margin: 16px 0 16px 24px; line-height: 1.8; }
+        .doc-page li { margin-bottom: 8px; }
+        .doc-page strong { color: var(--color-text); }
+        .doc-page table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+        .doc-page th, .doc-page td { padding: 12px 16px; text-align: left; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .doc-page th { background: var(--color-bg-alt); font-weight: 600; color: var(--color-text); }
+        .doc-page td { color: var(--color-text-muted); }
+        .highlight-box { background: rgba(124, 58, 237, 0.1); border: 1px solid rgba(124, 58, 237, 0.3); border-radius: var(--radius-md); padding: 24px; margin: 32px 0; }
+        .highlight-box h4 { color: var(--color-primary); font-size: 1.1rem; margin-bottom: 12px; }
+        .highlight-box p { margin-bottom: 0; }
+        .back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--color-text-muted); text-decoration: none; font-size: 0.95rem; margin-bottom: 24px; transition: color 0.2s; }
+        .back-link:hover { color: var(--color-primary); }
+        .code-comment { color: #6b7280; }
+        .code-keyword { color: #7c3aed; font-weight: 600; }
+        .code-string { color: #10b981; }
+        .code-feature { color: #f472b6; }
+        .code-result { color: #06b6d4; }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="/aro/" class="logo"><span class="logo-aro">ARO</span></a>
+            <div class="nav-links">
+                <a href="../fdd.html">The FDD Story</a>
+                <a href="../getting-started.html">Get Started</a>
+                <a href="../docs.html" style="color: var(--color-text);">Docs</a>
+                <a href="../disclaimer.html">Motivation</a>
+                <a href="../download.html">Download</a>
+                <a href="https://github.com/arolang/aro" class="nav-github">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                    <span class="github-stars">
+                        <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+                        <span class="github-stars-count"></span>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="doc-page">
+        <a href="../docs.html" class="back-link">&#x2190; Back to Documentation</a>
+
+        <header class="doc-header">
+            <h1 class="gradient-text">Sockets</h1>
+            <p class="lead">
+                ARO provides built-in TCP socket support for bidirectional real-time communication.
+                This chapter covers socket servers and clients.
+            </p>
+        </header>
+
+        <h2>Socket Server</h2>
+
+        <h3>Starting a Server</h3>
+        <p>Listen for TCP connections in Application-Start:</p>
+
+        <pre><code><span class="code-feature">(Application-Start: Socket Server)</span> {
+    <span class="code-keyword">Listen</span> on port 9000 as &lt;socket-server&gt;.
+    <span class="code-keyword">Log</span> <span class="code-string">"Socket server listening on port 9000"</span> to the &lt;console&gt;.
+    <span class="code-keyword">Keepalive</span> the &lt;application&gt; for the &lt;events&gt;.
+    <span class="code-keyword">Return</span> an <span class="code-result">&lt;OK: status&gt;</span> for the &lt;startup&gt;.
+}</code></pre>
+
+        <h3>Connection Events</h3>
+        <p>Socket servers emit events for connection lifecycle:</p>
+
+        <table>
+            <thead>
+                <tr><th>Event</th><th>When Triggered</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><code>ClientConnected</code></td><td>Client connects</td></tr>
+                <tr><td><code>DataReceived</code></td><td>Data received from client</td></tr>
+                <tr><td><code>ClientDisconnected</code></td><td>Client disconnects</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Handling Connections</h3>
+        <pre><code><span class="code-feature">(Handle Connection: ClientConnected Handler)</span> {
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;connection-id&gt;</span> from the &lt;event: connectionId&gt;.
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;remote-address&gt;</span> from the &lt;event: remoteAddress&gt;.
+
+    <span class="code-keyword">Log</span> <span class="code-string">"Client connected: ${remote-address}"</span> to the &lt;console&gt;.
+
+    <span class="code-comment">(* Send welcome message *)</span>
+    <span class="code-keyword">Send</span> the &lt;welcome&gt; to the &lt;event: connection&gt; with <span class="code-string">"Welcome to the server!"</span>.
+
+    <span class="code-keyword">Return</span> an <span class="code-result">&lt;OK: status&gt;</span> for the &lt;connection&gt;.
+}</code></pre>
+
+        <h3>Receiving Data</h3>
+        <pre><code><span class="code-feature">(Handle Data: DataReceived Handler)</span> {
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;data&gt;</span> from the &lt;event: data&gt;.
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;connection&gt;</span> from the &lt;event: connection&gt;.
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;connection-id&gt;</span> from the &lt;event: connectionId&gt;.
+
+    <span class="code-keyword">Log</span> <span class="code-string">"Received from ${connection-id}: ${data}"</span> to the &lt;console&gt;.
+
+    <span class="code-comment">(* Process the data *)</span>
+    <span class="code-keyword">&lt;Process&gt;</span> the <span class="code-result">&lt;response&gt;</span> from the &lt;data&gt;.
+
+    <span class="code-comment">(* Send response back *)</span>
+    <span class="code-keyword">Send</span> the &lt;response&gt; to the &lt;connection&gt;.
+
+    <span class="code-keyword">Return</span> an <span class="code-result">&lt;OK: status&gt;</span> for the &lt;data&gt;.
+}</code></pre>
+
+        <h3>Handling Disconnections</h3>
+        <pre><code><span class="code-feature">(Handle Disconnect: ClientDisconnected Handler)</span> {
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;connection-id&gt;</span> from the &lt;event: connectionId&gt;.
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;reason&gt;</span> from the &lt;event: reason&gt;.
+
+    <span class="code-keyword">Log</span> <span class="code-string">"Client ${connection-id} disconnected: ${reason}"</span> to the &lt;console&gt;.
+
+    <span class="code-comment">(* Clean up client state *)</span>
+    <span class="code-keyword">Delete</span> the &lt;client-state&gt; from the &lt;client-registry&gt; where id = &lt;connection-id&gt;.
+
+    <span class="code-keyword">Return</span> an <span class="code-result">&lt;OK: status&gt;</span> for the &lt;disconnect&gt;.
+}</code></pre>
+
+        <h2>Socket Client</h2>
+
+        <h3>Connecting to a Server</h3>
+        <pre><code><span class="code-feature">(Connect to Server: External Service)</span> {
+    <span class="code-keyword">Connect</span> to &lt;host: <span class="code-string">"192.168.1.100"</span>&gt; on port 8080 as &lt;server-connection&gt;.
+
+    <span class="code-comment">(* Send initial handshake *)</span>
+    <span class="code-keyword">Send</span> the &lt;handshake&gt; to the &lt;server-connection&gt; with { type: <span class="code-string">"hello"</span>, client: <span class="code-string">"my-app"</span> }.
+
+    <span class="code-keyword">Return</span> an <span class="code-result">&lt;OK: status&gt;</span> for the &lt;connection&gt;.
+}</code></pre>
+
+        <h3>Sending Data</h3>
+        <pre><code><span class="code-feature">(Send Message: Messaging)</span> {
+    <span class="code-keyword">Create</span> the <span class="code-result">&lt;message&gt;</span> with {
+        type: <span class="code-string">"chat"</span>,
+        content: &lt;content&gt;,
+        timestamp: &lt;current-time&gt;
+    }.
+
+    <span class="code-keyword">Send</span> the &lt;message: JSON&gt; to the &lt;server-connection&gt;.
+
+    <span class="code-keyword">Return</span> an <span class="code-result">&lt;OK: status&gt;</span> for the &lt;send&gt;.
+}</code></pre>
+
+        <h2>Common Patterns</h2>
+
+        <h3>Echo Server</h3>
+        <pre><code><span class="code-feature">(Application-Start: Echo Server)</span> {
+    <span class="code-keyword">Listen</span> on port 9000 as &lt;echo-server&gt;.
+    <span class="code-keyword">Log</span> <span class="code-string">"Echo server listening on port 9000"</span> to the &lt;console&gt;.
+    <span class="code-keyword">Keepalive</span> the &lt;application&gt; for the &lt;events&gt;.
+    <span class="code-keyword">Return</span> an <span class="code-result">&lt;OK: status&gt;</span> for the &lt;startup&gt;.
+}
+
+<span class="code-feature">(Echo Data: DataReceived Handler)</span> {
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;data&gt;</span> from the &lt;event: data&gt;.
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;connection&gt;</span> from the &lt;event: connection&gt;.
+
+    <span class="code-comment">(* Echo back the received data *)</span>
+    <span class="code-keyword">Send</span> the &lt;data&gt; to the &lt;connection&gt;.
+
+    <span class="code-keyword">Return</span> an <span class="code-result">&lt;OK: status&gt;</span> for the &lt;echo&gt;.
+}</code></pre>
+
+        <h3>Chat Server</h3>
+        <pre><code><span class="code-feature">(Application-Start: Chat Server)</span> {
+    <span class="code-keyword">Listen</span> on port 9000 as &lt;chat-server&gt;.
+    <span class="code-keyword">Create</span> the <span class="code-result">&lt;clients&gt;</span> with [].
+    <span class="code-keyword">Publish</span> as &lt;connected-clients&gt; &lt;clients&gt;.
+    <span class="code-keyword">Keepalive</span> the &lt;application&gt; for the &lt;events&gt;.
+    <span class="code-keyword">Return</span> an <span class="code-result">&lt;OK: status&gt;</span> for the &lt;startup&gt;.
+}
+
+<span class="code-feature">(Register Client: ClientConnected Handler)</span> {
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;connection&gt;</span> from the &lt;event: connection&gt;.
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;connection-id&gt;</span> from the &lt;event: connectionId&gt;.
+
+    <span class="code-comment">(* Add to connected clients *)</span>
+    <span class="code-keyword">Store</span> the &lt;connection&gt; into the &lt;connected-clients&gt; with id &lt;connection-id&gt;.
+
+    <span class="code-comment">(* Notify others *)</span>
+    <span class="code-keyword">Broadcast</span> the &lt;announcement&gt; to the &lt;chat-server&gt; with <span class="code-string">"User joined"</span>.
+
+    <span class="code-keyword">Return</span> an <span class="code-result">&lt;OK: status&gt;</span> for the &lt;registration&gt;.
+}
+
+<span class="code-feature">(Broadcast Message: DataReceived Handler)</span> {
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;message&gt;</span> from the &lt;event: data&gt;.
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;sender-id&gt;</span> from the &lt;event: connectionId&gt;.
+
+    <span class="code-keyword">Create</span> the <span class="code-result">&lt;broadcast&gt;</span> with {
+        from: &lt;sender-id&gt;,
+        message: &lt;message&gt;,
+        timestamp: &lt;current-time&gt;
+    }.
+
+    <span class="code-comment">(* Send to all connected clients *)</span>
+    <span class="code-keyword">Broadcast</span> the &lt;broadcast: JSON&gt; to the &lt;chat-server&gt;.
+
+    <span class="code-keyword">Return</span> an <span class="code-result">&lt;OK: status&gt;</span> for the &lt;broadcast&gt;.
+}</code></pre>
+
+        <h2>Data Formats</h2>
+
+        <h3>Text Data</h3>
+        <pre><code><span class="code-keyword">Send</span> the &lt;text&gt; to the &lt;connection&gt; with <span class="code-string">"Hello, World!"</span>.</code></pre>
+
+        <h3>JSON Data</h3>
+        <pre><code><span class="code-keyword">Create</span> the <span class="code-result">&lt;message&gt;</span> with {
+    type: <span class="code-string">"update"</span>,
+    data: { value: 42 }
+}.
+<span class="code-keyword">Send</span> the &lt;message: JSON&gt; to the &lt;connection&gt;.</code></pre>
+
+        <h2>Broadcasting</h2>
+
+        <h3>To All Clients</h3>
+        <pre><code><span class="code-keyword">Broadcast</span> the &lt;message&gt; to the &lt;socket-server&gt;.</code></pre>
+
+        <h3>To Specific Clients</h3>
+        <pre><code><span class="code-comment">(* Send to specific connection *)</span>
+<span class="code-keyword">Send</span> the &lt;message&gt; to the &lt;connection&gt;.
+
+<span class="code-comment">(* Send to connection by ID *)</span>
+<span class="code-keyword">Retrieve</span> the <span class="code-result">&lt;client&gt;</span> from the &lt;connected-clients&gt; where id = &lt;client-id&gt;.
+<span class="code-keyword">Send</span> the &lt;message&gt; to the &lt;client: connection&gt;.</code></pre>
+
+        <h2>Best Practices</h2>
+
+        <h3>Validate Incoming Data</h3>
+        <pre><code><span class="code-feature">(Handle Data: DataReceived Handler)</span> {
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;raw-data&gt;</span> from the &lt;event: data&gt;.
+
+    <span class="code-comment">(* Validate data format *)</span>
+    <span class="code-keyword">Parse</span> the <span class="code-result">&lt;message: JSON&gt;</span> from the &lt;raw-data&gt;.
+
+    if &lt;message&gt; is empty then {
+        <span class="code-keyword">Log</span> <span class="code-string">"Invalid message format"</span> to the &lt;console&gt;.
+        <span class="code-keyword">Return</span> an <span class="code-result">&lt;OK: status&gt;</span> for the &lt;validation&gt;.
+    }
+
+    <span class="code-keyword">Validate</span> the &lt;message&gt; for the &lt;message-schema&gt;.
+
+    <span class="code-comment">(* Process valid message *)</span>
+    <span class="code-keyword">&lt;Process&gt;</span> the <span class="code-result">&lt;result&gt;</span> from the &lt;message&gt;.
+    <span class="code-keyword">Return</span> an <span class="code-result">&lt;OK: status&gt;</span> for the &lt;processing&gt;.
+}</code></pre>
+
+        <h3>Clean Up on Shutdown</h3>
+        <pre><code><span class="code-feature">(Application-End: Success)</span> {
+    <span class="code-keyword">Log</span> <span class="code-string">"Closing all connections..."</span> to the &lt;console&gt;.
+
+    <span class="code-comment">(* Notify all clients *)</span>
+    <span class="code-keyword">Broadcast</span> the &lt;shutdown-notice&gt; to the &lt;socket-server&gt; with <span class="code-string">"Server shutting down"</span>.
+
+    <span class="code-comment">(* Close server *)</span>
+    <span class="code-keyword">Close</span> the &lt;socket-server&gt;.
+
+    <span class="code-keyword">Return</span> an <span class="code-result">&lt;OK: status&gt;</span> for the &lt;shutdown&gt;.
+}</code></pre>
+
+        <div class="highlight-box">
+            <h4>Next Steps</h4>
+            <p>
+                <a href="event-driven.html">Events</a> - Event-driven patterns<br>
+                <a href="http-services.html">HTTP Services</a> - HTTP communication<br>
+                <a href="application-lifecycle.html">Application Lifecycle</a> - Startup and shutdown
+            </p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>Obviously, this page is rendered with <a href="https://github.com/arolang/PageBuilder">ARO PageBuilder</a>.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

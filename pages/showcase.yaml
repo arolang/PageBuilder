@@ -1,0 +1,72 @@
+title: Showcase - ARO Programming Language
+
+# ── Navigation — Showcase entry carries the .nav-active class ──────────
+nav_links:
+  - href: fdd.html
+    label: The FDD Story
+  - href: getting-started.html
+    label: Get Started
+  - href: tutorial.html
+    label: Tutorial
+  - href: showcase.html
+    label: Showcase
+    class_attr: ' class="nav-active"'
+  - href: docs.html
+    label: Docs
+  - href: disclaimer.html
+    label: Motivation
+  - href: download.html
+    label: Download
+
+mobile_links:
+  - href: fdd.html
+    label: The FDD Story
+  - href: getting-started.html
+    label: Get Started
+  - href: tutorial.html
+    label: Tutorial
+  - href: showcase.html
+    label: Showcase
+  - href: docs.html
+    label: Docs
+  - href: disclaimer.html
+    label: Motivation
+  - href: download.html
+    label: Download
+mobile_github_attr: ' class="nav-github"'
+
+# ── Subpage hero ───────────────────────────────────────────────────────
+hero_prefix: "Built with "
+hero_heading: ARO
+hero_lead: Applications and tools built with the ARO programming language.
+
+# ── Showcase cards ─────────────────────────────────────────────────────
+showcase_cards:
+  - name: ShowFiles
+    image: img/showfiles-screen.jpg
+    alt: ShowFiles terminal file manager screenshot
+    text: A Midnight Commander-style terminal file manager with dual-panel layout, keyboard navigation, and streaming file previews. Compiled to a native binary with <code>aro build</code>.
+    link: 'https://github.com/arolang/ShowFiles'
+  - name: Web Crawler
+    image: img/crawler-screen.jpg
+    alt: ARO Web Crawler terminal output screenshot
+    text: A web crawler that extracts content as Markdown. Fully event-driven with repository-based URL deduplication, parallel link processing, and typed event extraction via OpenAPI schemas. ~200 lines of ARO.
+    link: 'https://github.com/arolang/example-web-crawler'
+  - name: FediTerm
+    image: img/fediterm-screen.jpeg
+    alt: FediTerm Mastodon terminal client screenshot
+    text: A Mastodon client for the terminal. Browse your home timeline, stream new posts in real time via SSE, compose toots, and reply inline. Zero plugins or external dependencies.
+    link: 'https://github.com/arolang/FediTerm'
+
+# ── Footer (same as the rest of the site) ──────────────────────────────
+
+# ── Page composition ───────────────────────────────────────────────────
+tpl: shells/showcase
+elements:
+  - tpl: organisms/nav
+  - tpl: organisms/mobile_menu
+  - tpl: organisms/subpage_hero_inline
+  - tpl: organisms/showcase_main
+  - tpl: atoms/progress_bar
+  - tpl: organisms/footer
+  - tpl: atoms/animation_scripts

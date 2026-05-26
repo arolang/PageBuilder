@@ -1,0 +1,259 @@
+title: The FDD Story - ARO Programming Language
+
+# Nav — FDD link gets its active style, label loses the leading "The "
+nav_links:
+  - href: fdd.html
+    label: FDD Story
+    class_attr: ' style="color: var(--color-text);"'
+  - href: getting-started.html
+    label: Get Started
+  - href: tutorial.html
+    label: Tutorial
+  - href: showcase.html
+    label: Showcase
+  - href: docs.html
+    label: Docs
+  - href: disclaimer.html
+    label: Motivation
+  - href: download.html
+    label: Download
+
+mobile_links:
+  - href: fdd.html
+    label: The FDD Story
+  - href: getting-started.html
+    label: Get Started
+  - href: tutorial.html
+    label: Tutorial
+  - href: showcase.html
+    label: Showcase
+  - href: docs.html
+    label: Docs
+  - href: disclaimer.html
+    label: Motivation
+  - href: download.html
+    label: Download
+
+# ── Page composition: every block is an element. Sections iterate
+#    instead of being hardcoded s1_…/s2_…/s3_… fields.
+tpl: shells/fdd
+elements:
+  - tpl: organisms/nav
+  - tpl: organisms/mobile_menu
+
+  - tpl: organisms/fdd_hero
+    title_html: |-
+      The <span class="accent">Forgotten</span><br>
+                Methodology
+    lead: |-
+      In 1997, a brilliant idea was born: what if code could speak the language of business?
+                  Then the world forgot about it. <em>Until now.</em>
+
+  - tpl: organisms/subpage_main
+    elements:
+
+      # ── Section 1: Once Upon a Time in Singapore ──
+      - tpl: organisms/subpage_section
+        title: "&#x1F4D6; Once Upon a Time in Singapore..."
+        elements:
+          - tpl: molecules/paragraph
+            html: |-
+              The year was <strong>1997</strong>. In Singapore, a massive banking project was in crisis.
+                            The United Overseas Bank had hired developers from around the world, but something wasn't working.
+                            The business people couldn't understand the developers. The developers couldn't understand the requirements.
+                            <em>Sound familiar?</em>
+          - tpl: molecules/paragraph
+            html: |-
+              Enter <strong>Jeff De Luca</strong> and <strong>Peter Coad</strong>, two software veterans who looked at this
+                            chaos and asked a radical question:
+          - tpl: molecules/callout
+            variant: ""
+            html: |-
+              "What if we structured our entire development process around the one thing
+                                everyone can understand—<strong>features</strong>?"
+          - tpl: molecules/paragraph
+            html: |-
+              They called it <strong>Feature-Driven Development</strong> (FDD), and it was beautiful.
+                            The banking project was saved. A book was written. The methodology was documented.
+          - tpl: molecules/book_reference
+            icon: "&#x1F4DA;"
+            title: A Practical Guide to Feature-Driven Development
+            authors: Stephen R. Palmer & John M. Felsing
+            publisher: Prentice Hall, 2002
+            blurb: |-
+              The definitive guide that documented FDD's principles—and then quietly gathered dust
+                                    on developers' shelves.
+
+      # ── Section 2: The Magic Formula ──
+      - tpl: organisms/subpage_section
+        title: "&#x2728; The Magic Formula"
+        elements:
+          - tpl: molecules/paragraph
+            html: |-
+              At the heart of FDD was a deceptively simple idea: every feature should be expressed
+                            as an <strong>action</strong> performed on a <strong>result</strong> for a <strong>business object</strong>.
+          - tpl: molecules/feature_formula
+            examples:
+              - Calculate the total for the shopping cart
+              - Validate the credentials for the user
+              - Send the notification to the customer
+          - tpl: molecules/paragraph
+            html: |-
+              This wasn't just a naming convention. It was a <em>language</em>. A way for product managers,
+                            business analysts, and developers to speak the same tongue. When a PM wrote
+                            "Calculate the total for the shopping cart," the developer knew exactly what to build.
+          - tpl: molecules/heading_h3
+            text: "Feature Sets: The Bigger Picture"
+          - tpl: molecules/paragraph
+            html: |-
+              Individual features were grouped into <strong>Feature Sets</strong>—collections of related
+                            functionality that together delivered a business capability. Think of a Feature Set as a chapter
+                            in your application's story.
+          - tpl: molecules/paragraph
+            html: A "User Management" feature set might contain:
+          - tpl: molecules/ul_list
+            style: "color: var(--color-text-muted); margin: 20px 0 20px 24px; line-height: 2;"
+            items:
+              - <code>Create the account for the user</code>
+              - <code>Validate the credentials for the user</code>
+              - <code>Update the profile for the user</code>
+              - <code>Reset the password for the user</code>
+          - tpl: molecules/heading_h3
+            text: "Parking Lots: Where Features Wait Their Turn"
+          - tpl: molecules/paragraph
+            html: |-
+              FDD introduced the concept of <strong>Parking Lots</strong>—visual dashboards showing the status
+                            of all feature sets. At a glance, anyone (yes, even the CEO) could see what was done,
+                            what was in progress, and what was coming.
+          - tpl: molecules/parking_lot
+            items:
+              - name: User Management
+                state: complete
+                bar_style: ""
+                status: 100% Complete
+              - name: Shopping Cart
+                state: progress
+                bar_style: ""
+                status: 60% In Progress
+              - name: Payment Processing
+                state: planned
+                bar_style: ""
+                status: 20% Planned
+              - name: Reporting
+                state: planned
+                bar_style: ' style="width: 0%"'
+                status: Not Started
+          - tpl: molecules/paragraph
+            html: |-
+              The parking lot made invisible work visible. No more "it's 90% done" for six months straight.
+                            Progress was real, measurable, and <em>understandable by everyone</em>.
+
+      # ── Section 3: So What Happened ──
+      - tpl: organisms/subpage_section
+        title: "&#x1F4A8; So What Happened?"
+        elements:
+          - tpl: molecules/paragraph
+            html: |-
+              FDD should have taken over the world. It had everything: clarity, structure, business alignment.
+                            But then came Agile. Then Scrum. Then Kanban. The industry moved on, chasing the next
+                            methodology like a dog chasing squirrels.
+          - tpl: molecules/callout
+            variant: " warning"
+            html: |-
+              FDD didn't die because it was wrong. It faded because it was <em>ahead of its time</em>.
+                                In 1997, we didn't have the technology to make feature-language into real code.
+          - tpl: molecules/paragraph
+            html: |-
+              The action-result-object pattern was brilliant for documentation. But developers still had to
+                            <strong>translate</strong> those features into Python, Java, C#. The gap remained.
+          - tpl: molecules/timeline
+            items:
+              - year: "1997"
+                title: FDD is Born
+                text: Jeff De Luca creates FDD for the Singapore banking project. It works brilliantly.
+              - year: "2001"
+                title: Agile Manifesto
+                text: The Agile movement begins. FDD is technically "Agile," but gets overshadowed by Scrum.
+              - year: "2002"
+                title: The Book is Published
+                text: Palmer & Felsing document FDD. It's well-received but gains limited adoption.
+              - year: "2010s"
+                title: The Quiet Years
+                text: FDD becomes a footnote in methodology discussions. "Feature" remains just a word.
+              - year: "2023"
+                title: LLMs Change Everything
+                text: AI that understands natural language arrives. Suddenly, feature-language makes perfect sense.
+              - year: "Now"
+                title: ARO is Born
+                text: The action-result-object pattern becomes an actual programming language. FDD's vision is realized.
+
+      # ── Section 4: Why AI Changes Everything ──
+      - tpl: organisms/subpage_section
+        title: "&#x1F916; Why AI Changes Everything"
+        elements:
+          - tpl: molecules/paragraph
+            html: |-
+              Here's the thing about Large Language Models: they're <em>really good</em> at understanding
+                            structured natural language. When you write:
+          - tpl: molecules/code_sample_aro
+            code: |-
+              <span style="color: var(--color-accent);">(createUser: User API)</span> {
+                  <span style="color: var(--color-primary);">Extract</span> the <span style="color: var(--color-secondary);">&lt;data&gt;</span> from the <span style="color: var(--color-secondary);">&lt;request: body&gt;</span>.
+                  <span style="color: var(--color-primary);">Validate</span> the <span style="color: var(--color-secondary);">&lt;data&gt;</span> against <span style="color: var(--color-secondary);">&lt;user-schema&gt;</span>.
+                  <span style="color: var(--color-primary);">Store</span> the <span style="color: var(--color-secondary);">&lt;user&gt;</span> into the <span style="color: var(--color-secondary);">&lt;database&gt;</span>.
+                  <span style="color: var(--color-primary);">Return</span> an <span style="color: var(--color-secondary);">&lt;OK: status&gt;</span> with <span style="color: var(--color-secondary);">&lt;user&gt;</span>.
+              }
+          - tpl: molecules/paragraph
+            html: |-
+              An AI doesn't have to guess what you mean. The structure <em>is</em> the specification.
+                            There's no translation gap, no ambiguity, no "oh, I thought you meant..."
+          - tpl: molecules/callout
+            variant: " success"
+            html: |-
+              <strong>ARO is the first programming language where the documentation IS the code.</strong><br>
+                                When a product manager writes a feature description, they're writing executable software.
+          - tpl: molecules/heading_h3
+            text: The Bridge Between Worlds
+          - tpl: molecules/paragraph
+            html: |-
+              For decades, we've had two separate languages: <strong>business-speak</strong> and <strong>code</strong>.
+                            Product managers write user stories. Developers translate them. Information is lost. Bugs are born.
+          - tpl: molecules/paragraph
+            html: "ARO eliminates this gap entirely:"
+          - tpl: molecules/ul_list
+            style: "color: var(--color-text-muted); margin: 20px 0 20px 24px; line-height: 2.2;"
+            items:
+              - "The PM describes a feature → <strong>That's the code</strong>"
+              - "The AI understands the intent → <strong>No translation needed</strong>"
+              - "The feature set executes → <strong>Exactly as described</strong>"
+          - tpl: molecules/paragraph
+            html: |-
+              This is what FDD was trying to achieve in 1997. They just didn't have an AI that could
+                            make features executable.
+          - tpl: molecules/paragraph
+            html: <em>Now we do.</em>
+
+      # ── Section 5: The Future is Features ──
+      - tpl: organisms/subpage_section
+        title: "&#x1F680; The Future is Features"
+        elements:
+          - tpl: molecules/paragraph
+            html: |-
+              ARO isn't just a new programming language. It's the realization of a decades-old dream:
+                            a world where business and code speak the same language.
+          - tpl: molecules/paragraph
+            html: |-
+              Every ARO statement follows the <strong>Action-Result-Object</strong> pattern.
+                            Every feature set maps to a business capability.
+                            Every application tells a story that <em>anyone</em> can read.
+          - tpl: molecules/paragraph
+            html: |-
+              And with AI as your coding partner, that story writes itself.
+          - tpl: molecules/cta_button
+            href: getting-started.html
+            class: btn btn-primary btn-large
+            label: Start Your First Feature
+
+  - tpl: atoms/progress_bar
+  - tpl: organisms/footer
+  - tpl: atoms/animation_scripts

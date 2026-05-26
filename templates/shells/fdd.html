@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ <el: title> }}</title>
+{{ Include the <result> from the <template: atoms/head_meta.html>. }}
+    <style>
+        /* FDD-specific styles (extends subpage.css) */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: var(--space-xl) 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--color-accent), #888);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: var(--space-lg);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--color-accent);
+            border: 3px solid var(--color-bg);
+        }
+
+        .timeline-year {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-xs);
+        }
+
+        .timeline-item h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+        }
+
+        .timeline-item p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        .feature-formula {
+            background: var(--color-bg-elevated);
+            padding: var(--space-xl);
+            border-radius: 12px;
+            text-align: center;
+            margin: var(--space-xl) 0;
+            border: 1px solid var(--color-border);
+        }
+
+        .formula {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+        }
+
+        .formula .action { color: var(--color-accent); }
+        .formula .result { color: #888; }
+        .formula .object { color: #666; }
+
+        .formula-example {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            color: var(--color-text-muted);
+            line-height: 2;
+        }
+
+        .parking-lot {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: var(--space-md);
+            margin: var(--space-xl) 0;
+        }
+
+        .parking-spot {
+            background: var(--color-bg-elevated);
+            border-radius: 8px;
+            padding: var(--space-md);
+            border: 1px solid var(--color-border);
+        }
+
+        .parking-spot h5 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            margin-bottom: var(--space-sm);
+        }
+
+        .parking-progress {
+            height: 6px;
+            background: var(--color-border);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: var(--space-xs);
+        }
+
+        .parking-progress-bar {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .parking-progress-bar.complete { background: #10b981; width: 100%; }
+        .parking-progress-bar.progress { background: #f59e0b; width: 60%; }
+        .parking-progress-bar.planned { background: #666; width: 20%; }
+
+        .parking-status {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+        }
+
+        .book-reference {
+            display: flex;
+            gap: var(--space-lg);
+            align-items: flex-start;
+            background: var(--color-bg-elevated);
+            padding: var(--space-lg);
+            border-radius: 12px;
+            margin: var(--space-xl) 0;
+            border: 1px solid var(--color-border);
+        }
+
+        .book-cover {
+            width: 100px;
+            height: 140px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 2.5rem;
+            border: 1px solid var(--color-border);
+        }
+
+        .book-info h4 {
+            font-size: 1rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        .book-info p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 600px) {
+            .book-reference {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+{{ <inner> }}</body>
+</html>

@@ -1,0 +1,130 @@
+
+<script>
+// Navigation scroll effect
+const nav = document.querySelector('.nav');
+let lastScroll = 0;
+
+window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    if (currentScroll > 50) {
+        nav.classList.add('scrolled');
+    } else {
+        nav.classList.remove('scrolled');
+    }
+    lastScroll = currentScroll;
+});
+
+// Scroll animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.animate-on-scroll').forEach(el => {
+    observer.observe(el);
+});
+
+// Mobile menu
+const navToggle = document.querySelector('.nav-toggle');
+const mobileMenu = document.querySelector('.mobile-menu');
+
+navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    document.body.classList.toggle('menu-open');
+});
+
+// Close mobile menu on link click
+mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        navToggle.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.classList.remove('menu-open');
+    });
+});
+
+// Blink nav cursor 5 times on homepage only
+const navLogo = document.querySelector('.nav .logo-aro');
+if (navLogo) {
+    navLogo.classList.add('blink-cursor');
+}
+
+// Cycle through plugin highlights
+const plugins = ['cpp', 'swift', 'rust', 'aro', 'python', 'c'];
+let currentPlugin = 0;
+
+function highlightPlugin() {
+    // Remove all active classes
+    document.querySelectorAll('.plugin-label, .flow-plugin').forEach(el => {
+        el.classList.remove('active');
+    });
+
+    // Add active class to current plugin
+    const plugin = plugins[currentPlugin];
+    document.querySelectorAll(`[data-plugin="${plugin}"]`).forEach(el => {
+        el.classList.add('active');
+    });
+
+    // Move to next plugin
+    currentPlugin = (currentPlugin + 1) % plugins.length;
+}
+
+// Start cycling if diagram exists
+if (document.querySelector('.plugin-diagram')) {
+    highlightPlugin();
+    setInterval(highlightPlugin, 1200);
+}
+
+// Cycle through stream file highlights
+const streamFiles = ['1', '2', '3'];
+// Different delays per file - upper lines "overtake" lower lines
+const outputDelays = { '1': 300, '2': 400, '3': 500 };
+// Patterns: single files, pairs, or all three
+const highlightPatterns = [
+    ['1'], ['2'], ['3'],           // singles
+    ['1'], ['2'], ['3'],           // singles again (more common)
+    ['1', '2'], ['2', '3'],        // pairs
+    ['1', '2', '3']                // all three
+];
+let currentPattern = 0;
+
+function highlightStreamFile() {
+    // Remove all active classes
+    document.querySelectorAll('.input-file, .output-file, .stream-in, .stream-out').forEach(el => {
+        el.classList.remove('active');
+    });
+
+    const fileIds = highlightPatterns[currentPattern];
+
+    // Highlight input side first for all files in pattern
+    fileIds.forEach(fileId => {
+        document.querySelectorAll(`.input-file[data-file="${fileId}"], .stream-in[data-file="${fileId}"]`).forEach(el => {
+            el.classList.add('active');
+        });
+
+        // Highlight output side after delay (varies per file - creates overtaking effect)
+        setTimeout(() => {
+            document.querySelectorAll(`.output-file[data-file="${fileId}"], .stream-out[data-file="${fileId}"]`).forEach(el => {
+                el.classList.add('active');
+            });
+        }, outputDelays[fileId]);
+    });
+
+    // Move to next pattern
+    currentPattern = (currentPattern + 1) % highlightPatterns.length;
+}
+
+// Start cycling if stream diagram exists
+if (document.querySelector('.stream-diagram')) {
+    highlightStreamFile();
+    setInterval(highlightStreamFile, 1500);
+}
+</script>

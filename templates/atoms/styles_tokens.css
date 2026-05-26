@@ -1,0 +1,44 @@
+/*
+ * Design tokens generated from pages/styles.yaml by PageBuilder.
+ * Edit pages/styles.yaml and re-run `aro run . --input ./pages` to
+ * regenerate this file.
+ */
+
+:root {
+    /* Backgrounds */
+    --color-bg:          {{ <el: color_bg> }};
+    --color-bg-alt:      {{ <el: color_bg_alt> }};
+    --color-bg-elevated: {{ <el: color_bg_elevated> }};
+
+    /* Text */
+    --color-text:        {{ <el: color_text> }};
+    --color-text-muted:  {{ <el: color_text_muted> }};
+
+    /* Accent */
+    --color-accent:      {{ <el: color_accent> }};
+    --color-accent-dim:  {{ <el: color_accent_dim> }};
+    --color-accent-glow: {{ <el: color_accent_glow> }};
+
+    /* Borders */
+    --color-border:       {{ <el: color_border> }};
+    --color-border-light: {{ <el: color_border_light> }};
+
+    /* Typography */
+    --font-mono:         {{ <el: font_mono> }};
+
+    /* Spacing scale */
+    --space-xs:  {{ <el: space_xs> }};
+    --space-sm:  {{ <el: space_sm> }};
+    --space-md:  {{ <el: space_md> }};
+    --space-lg:  {{ <el: space_lg> }};
+    --space-xl:  {{ <el: space_xl> }};
+    --space-2xl: {{ <el: space_2xl> }};
+
+    /* Radii */
+    --radius-sm: {{ <el: radius_sm> }};
+    --radius-md: {{ <el: radius_md> }};
+    --radius-lg: {{ <el: radius_lg> }};
+
+    /* Shadow */
+    --shadow-glow: {{ <el: shadow_glow> }};
+}

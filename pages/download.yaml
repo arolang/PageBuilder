@@ -1,0 +1,218 @@
+title: Download - ARO Programming Language
+
+nav_links:
+  - href: fdd.html
+    label: The FDD Story
+  - href: getting-started.html
+    label: Get Started
+  - href: tutorial.html
+    label: Tutorial
+  - href: showcase.html
+    label: Showcase
+  - href: docs.html
+    label: Docs
+  - href: disclaimer.html
+    label: Motivation
+  - href: download.html
+    label: Download
+    class_attr: ' class="nav-active"'
+
+mobile_links:
+  - href: fdd.html
+    label: The FDD Story
+  - href: getting-started.html
+    label: Get Started
+  - href: tutorial.html
+    label: Tutorial
+  - href: showcase.html
+    label: Showcase
+  - href: docs.html
+    label: Docs
+  - href: disclaimer.html
+    label: Motivation
+  - href: download.html
+    label: Download
+mobile_github_attr: ' class="nav-github"'
+
+# ── Page composition: each download section is an element with its own
+#    inner blocks. Replaces the old flat cli_*/brew_*/build_*/ide_*/quick_*
+#    fields with one nested elements list per section.
+tpl: shells/download
+elements:
+  - tpl: organisms/nav
+  - tpl: organisms/mobile_menu
+  - tpl: organisms/subpage_hero_inline
+    hero_prefix: "Download "
+    hero_heading: ARO
+    hero_lead: Get the ARO CLI and IDE extensions to start building feature-driven applications.
+  - tpl: organisms/download_main
+    elements:
+      - tpl: organisms/download_section
+        icon: "&#x1F4E6;"
+        title: ARO Command-Line Interface
+        intro: |-
+          The ARO CLI lets you run, build, compile, and test ARO applications.
+                          Download the pre-built binary for your platform or build from source.
+        elements:
+          - tpl: molecules/homebrew_install
+            icon: "&#x1F37A;"
+            title: Install with Homebrew
+            tag: Recommended for macOS
+            intro: |-
+              The easiest way to install ARO on macOS. Homebrew handles updates and dependencies automatically.
+            command: "brew tap arolang/aro\nbrew install aro"
+            command_js: 'brew tap arolang/aro\nbrew install aro'
+          - tpl: molecules/centered_text
+            style: "text-align: center; color: var(--color-text-muted); margin-bottom: 24px;"
+            text: "Or download a pre-built binary:"
+          - tpl: organisms/download_grid
+            elements:
+              - tpl: molecules/download_card
+                icon: "&#x1F34E;"
+                title: macOS
+                desc: Native binary for Apple Silicon Macs
+                href: 'https://github.com/arolang/aro/releases/latest'
+                btn_label: Download for macOS
+                version: aro-macos-arm64.tar.gz
+              - tpl: molecules/download_card
+                icon: "&#x1F427;"
+                title: Linux
+                desc: 64-bit binary for Ubuntu, Debian, and other distributions
+                href: 'https://github.com/arolang/aro/releases/latest'
+                btn_label: Download for Linux
+                version: aro-linux-amd64.tar.gz
+              - tpl: molecules/platform_card_github
+                icon: "&#x1FA9F;"
+                title: Windows
+                desc: Currently searching for contributors
+                href: 'https://github.com/arolang/aro/blob/main/CONTRIBUTING.md'
+                btn_label: Help develop ARO for Windows
+          - tpl: molecules/build_from_source
+            title: Build from Source
+            intro: "Alternatively, build ARO from source using Swift:"
+            code: |-
+              git clone https://github.com/arolang/aro.git
+              cd aro
+              swift build -c release
+              # Binary is at .build/release/aro
+            outro: "Requires <code>Swift 6.2</code> or later."
+      - tpl: organisms/download_section
+        icon: "&#x1F4D6;"
+        title: Documentation
+        intro: |-
+          Learn ARO with our comprehensive documentation series covering philosophy, syntax, patterns, and practical examples.
+        elements:
+          - tpl: organisms/download_grid
+            elements:
+              - tpl: molecules/download_card
+                icon: "&#x1F4D3;"
+                title: Essential Primer
+                desc: A concise introduction to ARO for developers who want to get up to speed quickly
+                href: 'https://github.com/arolang/aro/releases/latest/download/ARO-Essential-Primer.pdf'
+                btn_label: Download PDF
+                version: ARO-Essential-Primer.pdf
+              - tpl: molecules/download_card
+                icon: "&#x1F4D8;"
+                title: The Language Guide
+                desc: "Comprehensive guide to ARO: from mental model to native compilation"
+                href: 'https://github.com/arolang/aro/releases/latest/download/ARO-Language-Guide.pdf'
+                btn_label: Download PDF
+                version: ARO-Language-Guide.pdf
+              - tpl: molecules/download_card
+                icon: "&#x1F4D7;"
+                title: ARO By Example
+                desc: "Learn by doing: practical examples and hands-on tutorials"
+                href: 'https://github.com/arolang/aro/releases/latest/download/ARO-By-Example.pdf'
+                btn_label: Download PDF
+                version: ARO-By-Example.pdf
+              - tpl: molecules/download_card
+                icon: "&#x1F4D9;"
+                title: Construction Studies
+                desc: Deep dives into ARO internals and advanced implementation patterns
+                href: 'https://github.com/arolang/aro/releases/latest/download/ARO-Construction-Studies.pdf'
+                btn_label: Download PDF
+                version: ARO-Construction-Studies.pdf
+              - tpl: molecules/download_card
+                icon: "&#x1F9E9;"
+                title: The Plugin Guide
+                desc: Build plugins in Swift, Rust, C, and Python to extend ARO
+                href: 'https://github.com/arolang/aro/releases/latest/download/ARO-Plugin-Guide.pdf'
+                btn_label: Download PDF
+                version: ARO-Plugin-Guide.pdf
+              - tpl: molecules/download_card
+                icon: "&#x1F4D3;"
+                title: The Essential Primer
+                desc: "A concise introduction to ARO: business logic as language"
+                href: 'https://github.com/arolang/aro/releases/latest/download/ARO-Essential-Primer.pdf'
+                btn_label: Download PDF
+                version: ARO-Essential-Primer.pdf
+              - tpl: molecules/download_card
+                icon: "&#x1F916;"
+                title: ARO by Hallucination
+                desc: "The story of how ARO was built with an LLM, and how to use <code>aro lm</code> and <code>aro ask</code> day-to-day"
+                href: 'https://github.com/arolang/aro/releases/latest/download/ARO-by-Hallucination.pdf'
+                btn_label: Download PDF
+                version: ARO-by-Hallucination.pdf
+      - tpl: organisms/download_section
+        extra_class: " editor-section"
+        icon: "&#x1F4DD;"
+        title: IDE Extensions
+        intro: |-
+          Enhance your ARO development experience with syntax highlighting and code snippets.
+        elements:
+          - tpl: organisms/editor_grid
+            elements:
+              - tpl: molecules/editor_card
+                icon: "&#x1F4BB;"
+                title: Visual Studio Code
+                tagline: Full syntax highlighting and smart snippets for VS Code.
+                features:
+                  - Syntax highlighting for all ARO elements
+                  - 40+ code snippets for common patterns
+                  - Bracket matching and auto-closing
+                  - Code folding for feature sets
+                href: 'https://github.com/arolang/aro/tree/main/Editor/vscode-aro'
+                link_label: Install from GitHub
+              - tpl: molecules/editor_card
+                icon: "&#x1F9E0;"
+                title: IntelliJ IDEA
+                tagline: TextMate-based highlighting with live templates for JetBrains IDEs.
+                features:
+                  - Syntax highlighting via TextMate
+                  - Live templates for quick coding
+                  - Works with all JetBrains IDEs
+                  - File type association
+                href: 'https://plugins.jetbrains.com/plugin/30696-aro-language-support'
+                link_label: Install from JetBrains Marketplace
+          - tpl: molecules/manual_install_note
+            html: |-
+              Extensions are also available in the
+                                <a href="https://github.com/arolang/aro/tree/main/Editor" style="color: var(--color-emerald);">Editor</a>
+                                directory of the GitHub repository.
+      - tpl: organisms/download_section
+        icon: "&#x1F680;"
+        title: Quick Start
+        intro: "After installing, verify your installation and run your first ARO application:"
+        elements:
+          - tpl: molecules/quick_start_code
+            code: |-
+              <span style="color: #888;"># Check version</span>
+              aro --version
+
+              <span style="color: #888;"># Run an example</span>
+              aro run ./Examples/HelloWorld
+
+              <span style="color: #888;"># Run tests</span>
+              aro test ./Examples/Calculator
+
+              <span style="color: #888;"># Compile to native binary</span>
+              aro build ./Examples/HelloWorld
+          - tpl: molecules/paragraph
+            html: |-
+              Ready to learn more? Check out the
+                            <a href="getting-started.html" style="color: var(--color-emerald);">Getting Started Guide</a>
+                            or dive into the
+                            <a href="tutorial.html" style="color: var(--color-emerald);">Tutorial</a>.
+  - tpl: atoms/progress_bar
+  - tpl: organisms/footer
+  - tpl: atoms/animation_scripts

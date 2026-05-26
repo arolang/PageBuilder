@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>WebSockets - ARO Programming Language</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ARO - The programming language where features become code. Built for humans, perfected for AI.">
+    <!-- Open Graph / Social Share -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://arolang.github.io/aro/">
+    <meta property="og:title" content="ARO - The Language AI Was Waiting For">
+    <meta property="og:description" content="ARO is the programming language where features become code. Built for humans. Perfected for AI.">
+    <meta property="og:image" content="https://arolang.github.io/aro/social.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ARO - The Language AI Was Waiting For">
+    <meta name="twitter:description" content="ARO is the programming language where features become code. Built for humans. Perfected for AI.">
+    <meta name="twitter:image" content="https://arolang.github.io/aro/social.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../animations.css">
+    <link rel="stylesheet" href="../subpage.css">
+    <!-- Matomo -->
+    <script>
+        var _paq = window._paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function() {
+            var u="//matomo.benjamin.ausdertechnik.de/";
+            _paq.push(['setTrackerUrl', u+'matomo.php']);
+            _paq.push(['setSiteId', '4']);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+        })();
+    </script>
+    <!-- End Matomo Code -->
+
+    <style>
+        .doc-page {
+            padding: 120px 24px 80px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .doc-page h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .doc-page h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 48px 0 16px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .doc-page h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 32px 0 12px;
+            color: var(--color-secondary);
+        }
+
+        .doc-page p {
+            font-size: 1.1rem;
+            color: var(--color-text-muted);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .doc-page code {
+            font-family: var(--font-mono);
+            background: var(--color-bg-alt);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--color-text);
+        }
+
+        .doc-page pre {
+            background: var(--color-bg-alt);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            overflow-x: auto;
+            margin: 24px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .doc-page pre code {
+            background: none;
+            padding: 0;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: var(--color-text);
+        }
+
+        .doc-page ul, .doc-page ol {
+            color: var(--color-text-muted);
+            margin: 16px 0 16px 24px;
+            line-height: 1.8;
+        }
+
+        .doc-page li {
+            margin-bottom: 8px;
+        }
+
+        .doc-page table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+        }
+
+        .doc-page th, .doc-page td {
+            padding: 12px 16px;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .doc-page th {
+            background: var(--color-bg-alt);
+            font-weight: 600;
+        }
+
+        .doc-page blockquote {
+            border-left: 4px solid var(--color-primary);
+            padding-left: 20px;
+            margin: 24px 0;
+            color: var(--color-text);
+            font-style: italic;
+        }
+
+        .doc-page strong {
+            color: var(--color-text);
+        }
+
+        .doc-page em {
+            color: var(--color-secondary);
+        }
+
+        .doc-page a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        .doc-page a:hover {
+            text-decoration: underline;
+        }
+
+        .doc-page hr {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 48px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="/aro/" class="logo">
+                <span class="logo-aro">ARO</span>
+            </a>
+            <div class="nav-links">
+                <a href="../fdd.html">The FDD Story</a>
+                <a href="../getting-started.html">Get Started</a>
+                <a href="../tutorial.html">Tutorial</a>
+                <a href="../showcase.html">Showcase</a>
+                <a href="../docs.html" style="color: var(--color-text);">Docs</a>
+                <a href="../disclaimer.html">Motivation</a>
+                <a href="../download.html">Download</a>
+                <a href="https://github.com/arolang/aro" class="nav-github">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                    <span class="github-stars">
+                        <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+                        <span class="github-stars-count"></span>
+                    </span>
+                </a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="mobile-menu">
+        <a href="../fdd.html">The FDD Story</a>
+        <a href="../getting-started.html">Get Started</a>
+        <a href="../tutorial.html">Tutorial</a>
+        <a href="../showcase.html">Showcase</a>
+        <a href="../docs.html">Docs</a>
+        <a href="../disclaimer.html">Motivation</a>
+        <a href="../download.html">Download</a>
+        <a href="https://github.com/arolang/aro">GitHub</a>
+    </div>
+
+    <main class="doc-page">
+        <h1 class="gradient-text">WebSockets</h1>
+
+<p>
+    ARO provides built-in WebSocket support for real-time bidirectional communication.
+    WebSocket connections are established via HTTP Upgrade on the same port as the HTTP server,
+    making it easy to add live updates to web applications.
+</p>
+
+<h2>Why WebSockets?</h2>
+
+<p>
+    Unlike traditional HTTP request-response cycles, WebSocket enables persistent connections
+    where both server and client can push data at any time. This is essential for:
+</p>
+
+<ul>
+    <li><strong>Real-time updates</strong> - Dashboards, notifications, live feeds</li>
+    <li><strong>Chat applications</strong> - Instant message delivery</li>
+    <li><strong>Collaborative features</strong> - Multi-user editing</li>
+    <li><strong>Event streaming</strong> - Logs, sensor data, market feeds</li>
+</ul>
+
+<h2>WebSocket Events</h2>
+
+<p>WebSocket lifecycle is managed through three event types:</p>
+
+<table>
+    <tr>
+        <th>Event</th>
+        <th>Handler Name Contains</th>
+        <th>Triggered When</th>
+    </tr>
+    <tr>
+        <td>Connect</td>
+        <td>"Connect"</td>
+        <td>Client completes WebSocket handshake</td>
+    </tr>
+    <tr>
+        <td>Message</td>
+        <td>"Message"</td>
+        <td>Client sends a text message</td>
+    </tr>
+    <tr>
+        <td>Disconnect</td>
+        <td>"Disconnect"</td>
+        <td>Connection closes</td>
+    </tr>
+</table>
+
+<h2>Event Handlers</h2>
+
+<p>Handle WebSocket events using the <code>WebSocket Event Handler</code> business activity pattern:</p>
+
+<h3>Connection Handler</h3>
+
+<pre><code><span class="feature-name">(Handle WebSocket Connect: WebSocket Event Handler)</span> {
+    <span class="action">Extract</span> the <span class="result">&lt;connection-id&gt;</span> from the <span class="result">&lt;event: id&gt;</span>.
+    <span class="action">Log</span> <span class="string">"WebSocket client connected"</span> to the <span class="result">&lt;console&gt;</span>.
+    <span class="action">Return</span> an <span class="result">&lt;OK: status&gt;</span> for the <span class="result">&lt;connection&gt;</span>.
+}</code></pre>
+
+<p>The <code>event</code> object provides:</p>
+<ul>
+    <li><code>id</code> - Unique connection identifier</li>
+    <li><code>path</code> - WebSocket path (e.g., "/ws")</li>
+    <li><code>remoteAddress</code> - Client IP address</li>
+</ul>
+
+<h3>Message Handler</h3>
+
+<pre><code><span class="feature-name">(Handle WebSocket Message: WebSocket Event Handler)</span> {
+    <span class="action">Extract</span> the <span class="result">&lt;message&gt;</span> from the <span class="result">&lt;event: message&gt;</span>.
+    <span class="action">Extract</span> the <span class="result">&lt;connection-id&gt;</span> from the <span class="result">&lt;event: connectionId&gt;</span>.
+    <span class="action">Log</span> <span class="result">&lt;message&gt;</span> to the <span class="result">&lt;console&gt;</span>.
+    <span class="action">Return</span> an <span class="result">&lt;OK: status&gt;</span> for the <span class="result">&lt;message&gt;</span>.
+}</code></pre>
+
+<h3>Disconnection Handler</h3>
+
+<pre><code><span class="feature-name">(Handle WebSocket Disconnect: WebSocket Event Handler)</span> {
+    <span class="action">Extract</span> the <span class="result">&lt;connection-id&gt;</span> from the <span class="result">&lt;event: connectionId&gt;</span>.
+    <span class="action">Log</span> <span class="string">"WebSocket client disconnected"</span> to the <span class="result">&lt;console&gt;</span>.
+    <span class="action">Return</span> an <span class="result">&lt;OK: status&gt;</span> for the <span class="result">&lt;disconnection&gt;</span>.
+}</code></pre>
+
+<h2>Broadcasting Messages</h2>
+
+<p>Send a message to all connected WebSocket clients:</p>
+
+<pre><code><span class="action">Broadcast</span> the <span class="result">&lt;message&gt;</span> to the <span class="result">&lt;websocket&gt;</span>.</code></pre>
+
+<p>
+    Messages are automatically serialized to JSON if they are objects.
+    This is commonly used when posting new data via HTTP that should be pushed to all connected clients.
+</p>
+
+<h2>Complete Example: Real-Time Chat</h2>
+
+<h3>Project Structure</h3>
+
+<pre><code>WebChat/
+├── openapi.yaml      # API contract
+├── main.aro          # Application lifecycle
+├── api.aro           # HTTP route handlers
+├── websocket.aro     # WebSocket event handlers
+└── templates/
+    └── index.html    # Chat UI</code></pre>
+
+<h3>main.aro</h3>
+
+<pre><code><span class="feature-name">(Application-Start: Web Chat)</span> {
+    <span class="action">Log</span> <span class="string">"Starting Web Chat..."</span> to the <span class="result">&lt;console&gt;</span>.
+    <span class="action">Start</span> the <span class="result">&lt;http-server&gt;</span> with {}.
+    <span class="action">Keepalive</span> the <span class="result">&lt;application&gt;</span> for the <span class="result">&lt;events&gt;</span>.
+    <span class="action">Return</span> an <span class="result">&lt;OK: status&gt;</span> for the <span class="result">&lt;startup&gt;</span>.
+}</code></pre>
+
+<h3>api.aro</h3>
+
+<pre><code><span class="feature-name">(postMessage: Web Chat API)</span> {
+    <span class="action">Extract</span> the <span class="result">&lt;body&gt;</span> from the <span class="result">&lt;request: body&gt;</span>.
+    <span class="action">Extract</span> the <span class="result">&lt;text: message&gt;</span> from the <span class="result">&lt;body&gt;</span>.
+    <span class="action">Create</span> the <span class="result">&lt;message: Message&gt;</span> with {
+        message: <span class="result">&lt;text&gt;</span>,
+        createdAt: <span class="result">&lt;now&gt;</span>
+    }.
+    <span class="action">Store</span> the <span class="result">&lt;message&gt;</span> into the <span class="result">&lt;message-repository&gt;</span>.
+
+    <span class="comment">(* Broadcast to all WebSocket clients *)</span>
+    <span class="action">Broadcast</span> the <span class="result">&lt;message&gt;</span> to the <span class="result">&lt;websocket&gt;</span>.
+
+    <span class="action">Return</span> a <span class="result">&lt;Created: status&gt;</span> with <span class="result">&lt;message&gt;</span>.
+}</code></pre>
+
+<h3>Client JavaScript</h3>
+
+<pre><code>// Connect to WebSocket
+const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+const ws = new WebSocket(`${protocol}//${location.host}/ws`);
+
+ws.onopen = () => console.log('Connected');
+
+ws.onmessage = (event) => {
+    const message = JSON.parse(event.data);
+    displayMessage(message);
+};
+
+ws.onclose = () => {
+    console.log('Disconnected, reconnecting...');
+    setTimeout(connect, 3000);
+};</code></pre>
+
+<h2>WebSocket Path</h2>
+
+<p>By default, WebSocket connections are accepted on <code>/ws</code>:</p>
+
+<pre><code>const ws = new WebSocket('ws://localhost:8080/ws');</code></pre>
+
+<h2>Best Practices</h2>
+
+<ul>
+    <li><strong>Use HTTP for commands, WebSocket for updates</strong> - Post via HTTP, broadcast via WebSocket</li>
+    <li><strong>Handle reconnection on client</strong> - Implement automatic reconnect with exponential backoff</li>
+    <li><strong>Log connection events</strong> - Track connects/disconnects for debugging</li>
+</ul>
+
+<hr>
+
+<p>
+    <a href="sockets.html">&larr; TCP Sockets</a> |
+    <a href="templates.html">Templates &rarr;</a>
+</p>
+    </main>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-aro">ARO</span>
+                    <p>The ARO Programming Language</p>
+                    <p class="footer-tagline">Speak Business. Write Code.</p>
+                    <a href="../imprint.html" class="footer-imprint">Imprint</a>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Learn</h4>
+                        <a href="../getting-started.html">Getting Started</a>
+                        <a href="../tutorial.html">Tutorial</a>
+                        <a href="../showcase.html">Showcase</a>
+                        <a href="../docs.html">Documentation</a>
+                        <a href="../download.html">Download</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Community</h4>
+                        <a href="https://github.com/arolang/aro">GitHub</a>
+                        <a href="https://github.com/arolang/aro/issues">Issues</a>
+                        <a href="https://social.uitsmijter.io/@aro">Mastodon</a>
+                        <a href="../disclaimer.html">Motivation & Disclaimer</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Obviously, this page is rendered with <a href="https://github.com/arolang/PageBuilder">ARO PageBuilder</a>.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Animation Scripts -->
+    <script src="../animations.js"></script>
+
+</body>
+</html>

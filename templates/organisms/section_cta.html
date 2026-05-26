@@ -1,0 +1,12 @@
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title animate-on-scroll">{{ <root: cta_title> }}</h2>
+            <p class="cta-subtitle animate-on-scroll">
+                {{ <root: cta_subtitle> }}
+            </p>
+            <div class="cta-buttons animate-on-scroll">
+{{ for each <btn> in <root: cta_buttons> { }}                <a href="{{ <btn: href> }}" class="{{ <btn: class> }}">{{ <btn: inner> }}</a>
+{{ } }}            </div>
+        </div>
+    </section>
+

@@ -1,0 +1,5 @@
+    <div class="mobile-menu">
+{{ for each <link> in <root: mobile_links> { }}        <a href="{{ <link: href> }}">{{ <link: label> }}</a>
+{{ } }}        <a href="https://github.com/arolang/aro"{{ <root: mobile_github_attr> }}>GitHub</a>
+    </div>
+

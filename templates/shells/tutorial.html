@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ <el: title> }}</title>
+{{ Include the <result> from the <template: atoms/head_meta.html>. }}
+    <style>
+        /* Tutorial-specific styles (extends subpage.css) */
+        .tutorial-nav {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .tutorial-nav a {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--color-border);
+            transition: all 0.2s;
+        }
+
+        .tutorial-nav a:hover,
+        .tutorial-nav a.active {
+            background: var(--color-accent);
+            transform: scale(1.3);
+        }
+
+        @media (max-width: 900px) {
+            .tutorial-nav { display: none; }
+        }
+
+        .tutorial-meta {
+            display: flex;
+            gap: var(--space-lg);
+            color: var(--color-text-muted);
+            font-size: 0.875rem;
+            margin-top: var(--space-lg);
+        }
+
+        .step {
+            padding: var(--space-2xl) 0;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .step-header {
+            margin-bottom: var(--space-xl);
+        }
+
+        .step-number {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-accent);
+            margin-bottom: var(--space-sm);
+        }
+
+        .step h2 {
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            margin-bottom: var(--space-sm);
+        }
+
+        .step-intro {
+            font-size: 1.1rem;
+            color: var(--color-text-muted);
+            max-width: 700px;
+        }
+
+        .narrative {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--color-text-muted);
+            margin-bottom: var(--space-lg);
+            max-width: 700px;
+        }
+
+        .narrative strong {
+            color: var(--color-text);
+        }
+
+        .narrative code {
+            background: var(--color-bg-elevated);
+            padding: 2px 6px;
+            border: 1px solid var(--color-border);
+            font-size: 0.9em;
+        }
+
+        .code-file {
+            margin: var(--space-lg) 0;
+            background: var(--color-bg-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .code-file-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--color-border);
+            gap: 8px;
+        }
+
+        .code-file-header .dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .code-file-header .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .code-file-header .filename {
+            margin-left: auto;
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+        }
+
+        .code-file pre {
+            padding: var(--space-lg);
+            margin: 0;
+            overflow-x: auto;
+            font-size: 0.875rem;
+            line-height: 1.8;
+        }
+
+        .code-file .comment { color: #555; }
+        .code-file .keyword { color: var(--color-accent); }
+        .code-file .action { color: #fff; font-weight: 600; }
+        .code-file .string { color: var(--color-accent); opacity: 0.8; }
+        .code-file .variable { color: #888; }
+
+        .callout {
+            border-left: 3px solid var(--color-accent);
+            padding: var(--space-md) var(--space-lg);
+            margin: var(--space-lg) 0;
+            background: var(--color-bg-elevated);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .callout p {
+            color: var(--color-text);
+            font-size: 1rem;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .file-structure {
+            background: var(--color-bg-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: var(--space-lg);
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            margin: var(--space-lg) 0;
+        }
+
+        .file-structure .dir { color: var(--color-accent); }
+        .file-structure .file { color: var(--color-text-muted); }
+        .file-structure .note { color: #555; }
+
+        .concept-list {
+            margin: var(--space-lg) 0;
+        }
+
+        .concept-item {
+            padding: var(--space-md) 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .concept-item:last-child {
+            border-bottom: none;
+        }
+
+        .concept-item h4 {
+            font-size: 1rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        .concept-item p {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            margin: 0;
+        }
+
+        .final-cta {
+            text-align: center;
+            padding: var(--space-2xl) 0;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .final-cta h2 {
+            margin-bottom: var(--space-md);
+        }
+
+        .final-cta p {
+            color: var(--color-text-muted);
+            margin-bottom: var(--space-lg);
+        }
+
+        @media (max-width: 768px) {
+            .tutorial-meta {
+                flex-direction: column;
+                gap: var(--space-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="/aro/" class="logo"><span class="logo-aro">ARO</span></a>
+            <div class="nav-links">
+                <a href="fdd.html">The FDD Story</a>
+                <a href="getting-started.html">Get Started</a>
+                <a href="tutorial.html" style="color: var(--color-text);">Tutorial</a>
+                <a href="showcase.html">Showcase</a>
+                <a href="docs.html">Docs</a>
+                <a href="disclaimer.html">Motivation</a>
+                <a href="download.html">Download</a>
+                <a href="https://github.com/arolang/aro" class="nav-github">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                    <span class="github-stars">
+                        <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+                        <span class="github-stars-count"></span>
+                    </span>
+                </a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="mobile-menu">
+        <a href="fdd.html">The FDD Story</a>
+        <a href="getting-started.html">Get Started</a>
+        <a href="tutorial.html">Tutorial</a>
+        <a href="showcase.html">Showcase</a>
+        <a href="docs.html">Docs</a>
+        <a href="disclaimer.html">Motivation</a>
+        <a href="download.html">Download</a>
+        <a href="https://github.com/arolang/aro">GitHub</a>
+    </div>
+
+    <div class="tutorial-nav">
+        <a href="#intro" title="Introduction"></a>
+        <a href="#structure" title="Project Structure"></a>
+        <a href="#contract" title="The Contract"></a>
+        <a href="#startup" title="Application Startup"></a>
+        <a href="#pages" title="Serving Pages"></a>
+        <a href="#messages" title="Posting Messages"></a>
+        <a href="#websocket" title="Real-Time Updates"></a>
+        <a href="#observer" title="Cleanup Observer"></a>
+        <a href="#templates" title="Templates"></a>
+        <a href="#run" title="Running It"></a>
+        <a href="#build" title="Build It"></a>
+    </div>
+
+    <!-- Hero with gradient background -->
+    <header class="subpage-hero">
+        <div class="container">
+            <h1>Build <span class="accent">StatusPost</span></h1>
+            <p class="lead">
+                A step-by-step guide to building a real-time message board with ARO.
+                WebSockets, repositories, templates, and more.
+            </p>
+            <div class="tutorial-meta">
+                <span>11 steps</span>
+                <span>~20 minutes</span>
+                <span>Intermediate</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- Step 1: The Story -->
+        <section id="story" class="step">
+            <div class="step-header">
+                <div class="step-number">Step 1</div>
+                <h2>The Story</h2>
+                <p class="step-intro">What we're building and why</p>
+            </div>
+
+            <p class="narrative">
+                Imagine you want to build a simple real-time message board. Users can post short
+                status updates, and everyone connected sees new messages instantly. No page refresh.
+                No polling. Just real-time updates via WebSocket.
+            </p>
+
+            <p class="narrative">
+                <strong>StatusPost</strong> is exactly that. It's a single-page app where you type a message,
+                hit Post, and it appears for everyone. The server stores messages in a repository,
+                broadcasts them via WebSocket, and even cleans up old messages automatically.
+            </p>
+
+            <p class="narrative">
+                By the end of this tutorial, you'll understand:
+            </p>
+
+            <div class="concept-list">
+                <div class="concept-item">
+                    <h4>Contract-First APIs</h4>
+                    <p>Define your HTTP routes in OpenAPI before writing code</p>
+                </div>
+                <div class="concept-item">
+                    <h4>WebSocket Support</h4>
+                    <p>Enable real-time bidirectional communication</p>
+                </div>
+                <div class="concept-item">
+                    <h4>Repositories</h4>
+                    <p>Store and retrieve data with simple actions</p>
+                </div>
+                <div class="concept-item">
+                    <h4>Repository Observers</h4>
+                    <p>React automatically when data changes</p>
+                </div>
+                <div class="concept-item">
+                    <h4>Templates</h4>
+                    <p>Render dynamic HTML with ARO expressions</p>
+                </div>
+            </div>
+
+            <p class="narrative">
+                Let's build it, step by step.
+            </p>
+        </section>
+
+        <!-- Step 2: Project Structure -->
+        <section id="structure" class="step">
+            <div class="step-header">
+                <div class="step-number">Step 2</div>
+                <h2>Project Structure</h2>
+                <p class="step-intro">Setting up the files</p>
+            </div>
+
+            <p class="narrative">
+                An ARO application is a directory containing <code>.aro</code> files and an optional
+                <code>openapi.yaml</code> for HTTP routing. Here's what StatusPost looks like:
+            </p>
+
+            <div class="file-structure">
+<pre><span class="dir">StatusPost/</span>
+  <span class="file">openapi.yaml</span>      <span class="note"># HTTP routes (contract-first)</span>
+  <span class="file">main.aro</span>          <span class="note"># Application lifecycle</span>
+  <span class="file">api.aro</span>           <span class="note"># HTTP handlers</span>
+  <span class="file">websocket.aro</span>     <span class="note"># WebSocket handlers</span>
+  <span class="dir">templates/</span>
+    <span class="file">index.html</span>      <span class="note"># Main page template</span>
+    <span class="dir">static/</span>
+      <span class="file">style.css</span>     <span class="note"># Styles</span>
+      <span class="file">app.js</span>        <span class="note"># Client-side JavaScript</span></pre>
+            </div>
+
+            <p class="narrative">
+                Create this directory structure. We'll fill in each file as we go.
+            </p>
+
+            <div class="callout">
+                <p>
+                    ARO automatically discovers all <code>.aro</code> files in your application directory.
+                    No imports needed. Feature sets are globally visible.
+                </p>
+            </div>
+        </section>
+
+        <!-- Step 3: The Contract -->
+        <section id="contract" class="step">
+            <div class="step-header">
+                <div class="step-number">Step 3</div>
+                <h2>The Contract</h2>
+                <p class="step-intro">Define the API first</p>
+            </div>
+
+            <p class="narrative">
+                ARO uses <strong>contract-first</strong> development. You define your HTTP routes
+                in an OpenAPI specification, and ARO routes requests to feature sets based on
+                the <code>operationId</code>.
+            </p>
+
+            <p class="narrative">
+                StatusPost needs four endpoints: serve the homepage, serve static files, get messages,
+                and post a new message.
+            </p>
+
+            <div class="code-file">
+                <div class="code-file-header">
+                    <div class="dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="filename">openapi.yaml</span>
+                </div>
+<pre>openapi: 3.0.3
+info:
+  title: StatusPost API
+  version: 1.0.0
+
+paths:
+  /:
+    get:
+      <span class="keyword">operationId: homePage</span>
+      summary: Serve the main HTML page
+
+  /static/{file}:
+    get:
+      <span class="keyword">operationId: serveStatic</span>
+      summary: Serve static files (CSS, JS)
+      parameters:
+        - name: file
+          in: path
+          required: true
+          schema:
+            type: string
+
+  /messages:
+    get:
+      <span class="keyword">operationId: getMessages</span>
+      summary: Get last 20 messages
+
+    post:
+      <span class="keyword">operationId: postMessage</span>
+      summary: Post a new message
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+
+components:
+  schemas:
+    Message:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        createdAt:
+          type: string
+          format: date-time</pre>
+            </div>
+
+            <p class="narrative">
+                Each <code>operationId</code> maps directly to a feature set name. When a request
+                hits <code>GET /</code>, ARO looks for a feature set named <code>homePage</code>.
+            </p>
+        </section>
+
+        <!-- Step 4: Application Startup -->
+        <section id="startup" class="step">
+            <div class="step-header">
+                <div class="step-number">Step 4</div>
+                <h2>Application Startup</h2>
+                <p class="step-intro">Where everything begins</p>
+            </div>
+
+            <p class="narrative">
+                Every ARO application needs exactly one <code>Application-Start</code> feature set.
+                This is where you initialize services and prepare for events.
+            </p>
+
+            <p class="narrative">
+                StatusPost needs an HTTP server with WebSocket support. We enable WebSocket by
+                passing a configuration object to the <code>Start</code> action.
+            </p>
+
+            <div class="code-file">
+                <div class="code-file-header">
+                    <div class="dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="filename">main.aro</span>
+                </div>
+<pre><span class="comment">(* StatusPost - Real-time message board with WebSocket updates *)</span>
+
+(<span class="keyword">Application-Start</span>: <span class="keyword">StatusPost</span>) {
+    <span class="action">Log</span> <span class="string">"Starting StatusPost..."</span> to the <span class="variable">&lt;console&gt;</span>.
+
+    <span class="comment">(* Start HTTP server with WebSocket on /ws path *)</span>
+    <span class="action">Start</span> the <span class="variable">&lt;http-server&gt;</span> with { websocket: <span class="string">"/ws"</span> }.
+
+    <span class="action">Log</span> <span class="string">"StatusPost ready on http://localhost:8080"</span> to the <span class="variable">&lt;console&gt;</span>.
+    <span class="action">Log</span> <span class="string">"WebSocket available on ws://localhost:8080/ws"</span> to the <span class="variable">&lt;console&gt;</span>.
+
+    <span class="comment">(* Keep the application running to handle events *)</span>
+    <span class="action">Keepalive</span> the <span class="variable">&lt;application&gt;</span> for the <span class="variable">&lt;events&gt;</span>.
+
+    <span class="action">Return</span> an <span class="variable">&lt;OK: status&gt;</span> for the <span class="variable">&lt;startup&gt;</span>.
+}
+
+(<span class="keyword">Application-End</span>: <span class="keyword">Success</span>) {
+    <span class="action">Log</span> <span class="string">"StatusPost shutting down..."</span> to the <span class="variable">&lt;console&gt;</span>.
+    <span class="action">Stop</span> the <span class="variable">&lt;http-server&gt;</span> with {}.
+    <span class="action">Return</span> an <span class="variable">&lt;OK: status&gt;</span> for the <span class="variable">&lt;shutdown&gt;</span>.
+}</pre>
+            </div>
+
+            <div class="callout">
+                <p>
+                    The <code>Keepalive</code> action is essential for long-running applications.
+                    Without it, the application would exit after startup completes.
+                </p>
+            </div>
+        </section>
+
+        <!-- Step 5: Serving Pages -->
+        <section id="pages" class="step">
+            <div class="step-header">
+                <div class="step-number">Step 5</div>
+                <h2>Serving Pages</h2>
+                <p class="step-intro">HTML templates and static files</p>
+            </div>
+
+            <p class="narrative">
+                Now we need to handle HTTP requests. The <code>homePage</code> feature set
+                serves the main HTML page. It retrieves recent messages from the repository
+                and transforms them through a template.
+            </p>
+
+            <div class="code-file">
+                <div class="code-file-header">
+                    <div class="dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="filename">api.aro (part 1)</span>
+                </div>
+<pre><span class="comment">(* Serve static files - CSS, JS *)</span>
+
+(<span class="keyword">serveStatic</span>: <span class="keyword">StatusPost API</span>) {
+    <span class="action">Extract</span> the <span class="variable">&lt;file&gt;</span> from the <span class="variable">&lt;pathParameters: file&gt;</span>.
+    <span class="action">Create</span> the <span class="variable">&lt;template-path&gt;</span> with <span class="string">"static/"</span> ++ <span class="variable">&lt;file&gt;</span>.
+    <span class="action">Transform</span> the <span class="variable">&lt;content&gt;</span> from the <span class="variable">&lt;template: template-path&gt;</span>.
+    <span class="action">Return</span> an <span class="variable">&lt;OK: status&gt;</span> with <span class="variable">&lt;content&gt;</span>.
+}
+
+<span class="comment">(* Serve the homepage with recent messages *)</span>
+
+(<span class="keyword">homePage</span>: <span class="keyword">StatusPost API</span>) {
+    <span class="action">Retrieve</span> the <span class="variable">&lt;all-messages&gt;</span> from the <span class="variable">&lt;message-repository&gt;</span>.
+    <span class="action">Extract</span> the <span class="variable">&lt;recent-messages: 0-19&gt;</span> from the <span class="variable">&lt;all-messages&gt;</span>.
+    <span class="action">Transform</span> the <span class="variable">&lt;html&gt;</span> from the <span class="variable">&lt;template: index.html&gt;</span>.
+    <span class="action">Return</span> an <span class="variable">&lt;OK: status&gt;</span> with <span class="variable">&lt;html&gt;</span>.
+}
+
+<span class="comment">(* Get messages as JSON for the API *)</span>
+
+(<span class="keyword">getMessages</span>: <span class="keyword">StatusPost API</span>) {
+    <span class="action">Retrieve</span> the <span class="variable">&lt;all-messages&gt;</span> from the <span class="variable">&lt;message-repository&gt;</span>.
+    <span class="action">Extract</span> the <span class="variable">&lt;recent-messages: 0-19&gt;</span> from the <span class="variable">&lt;all-messages&gt;</span>.
+    <span class="action">Return</span> an <span class="variable">&lt;OK: status&gt;</span> with <span class="variable">&lt;recent-messages&gt;</span>.
+}</pre>
+            </div>
+
+            <p class="narrative">
+                Notice the <code>Extract</code> with <code>0-19</code>? That's a range specifier.
+                It extracts the first 20 elements from the list. ARO supports
+                <code>first</code>, <code>last</code>, index access, and ranges.
+            </p>
+
+            <p class="narrative">
+                The <code>Transform</code> action processes a template file. Variables from
+                the current scope (like <code>recent-messages</code>) are available inside the template.
+            </p>
+        </section>
+
+        <!-- Step 6: Posting Messages -->
+        <section id="messages" class="step">
+            <div class="step-header">
+                <div class="step-number">Step 6</div>
+                <h2>Posting Messages</h2>
+                <p class="step-intro">Store and broadcast</p>
+            </div>
+
+            <p class="narrative">
+                When a user posts a message, we need to create a message object, store it in
+                the repository, and broadcast it to all connected WebSocket clients.
+            </p>
+
+            <div class="code-file">
+                <div class="code-file-header">
+                    <div class="dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="filename">api.aro (part 2)</span>
+                </div>
+<pre><span class="comment">(* Post a new message *)</span>
+
+(<span class="keyword">postMessage</span>: <span class="keyword">StatusPost API</span>) {
+    <span class="comment">(* Extract the message text from the form data *)</span>
+    <span class="action">Extract</span> the <span class="variable">&lt;body&gt;</span> from the <span class="variable">&lt;request: body&gt;</span>.
+    <span class="action">Extract</span> the <span class="variable">&lt;message-text: message&gt;</span> from the <span class="variable">&lt;body&gt;</span>.
+
+    <span class="comment">(* Create a message object with timestamp *)</span>
+    <span class="action">Create</span> the <span class="variable">&lt;message: Message&gt;</span> with {
+        message: <span class="variable">&lt;message-text&gt;</span>,
+        createdAt: <span class="variable">&lt;now&gt;</span>
+    }.
+
+    <span class="comment">(* Store in repository *)</span>
+    <span class="action">Store</span> the <span class="variable">&lt;message&gt;</span> into the <span class="variable">&lt;message-repository&gt;</span>.
+
+    <span class="comment">(* Broadcast to all WebSocket clients *)</span>
+    <span class="action">Broadcast</span> the <span class="variable">&lt;message&gt;</span> to the <span class="variable">&lt;websocket&gt;</span>.
+
+    <span class="action">Return</span> a <span class="variable">&lt;Created: status&gt;</span> with <span class="variable">&lt;message&gt;</span>.
+}</pre>
+            </div>
+
+            <p class="narrative">
+                The <code>Store</code> action saves the message to an in-memory repository.
+                Repositories are named collections that persist for the lifetime of the application.
+            </p>
+
+            <p class="narrative">
+                The <code>Broadcast</code> action sends the message to all connected WebSocket
+                clients. They'll receive it as JSON and update their UI in real-time.
+            </p>
+
+            <div class="callout">
+                <p>
+                    The <code>&lt;now&gt;</code> special variable gives you the current timestamp.
+                    ARO automatically serializes it to ISO 8601 format for JSON responses.
+                </p>
+            </div>
+        </section>
+
+        <!-- Step 7: WebSocket Handlers -->
+        <section id="websocket" class="step">
+            <div class="step-header">
+                <div class="step-number">Step 7</div>
+                <h2>Real-Time Updates</h2>
+                <p class="step-intro">WebSocket connection events</p>
+            </div>
+
+            <p class="narrative">
+                When clients connect and disconnect via WebSocket, ARO fires events that you
+                can handle with feature sets. The business activity pattern is
+                <code>WebSocket Event Handler</code>.
+            </p>
+
+            <div class="code-file">
+                <div class="code-file-header">
+                    <div class="dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="filename">websocket.aro</span>
+                </div>
+<pre><span class="comment">(* WebSocket Event Handlers *)</span>
+
+(<span class="keyword">Handle WebSocket Connect</span>: <span class="keyword">WebSocket Event Handler</span>) {
+    <span class="action">Extract</span> the <span class="variable">&lt;connection-id&gt;</span> from the <span class="variable">&lt;event: id&gt;</span>.
+    <span class="action">Log</span> <span class="string">"WebSocket client connected"</span> to the <span class="variable">&lt;console&gt;</span>.
+    <span class="action">Return</span> an <span class="variable">&lt;OK: status&gt;</span> for the <span class="variable">&lt;connection&gt;</span>.
+}
+
+(<span class="keyword">Handle WebSocket Disconnect</span>: <span class="keyword">WebSocket Event Handler</span>) {
+    <span class="action">Extract</span> the <span class="variable">&lt;connection-id&gt;</span> from the <span class="variable">&lt;event: connectionId&gt;</span>.
+    <span class="action">Log</span> <span class="string">"WebSocket client disconnected"</span> to the <span class="variable">&lt;console&gt;</span>.
+    <span class="action">Return</span> an <span class="variable">&lt;OK: status&gt;</span> for the <span class="variable">&lt;disconnection&gt;</span>.
+}</pre>
+            </div>
+
+            <p class="narrative">
+                These handlers are optional but useful for logging and tracking connected clients.
+                The magic happens in <code>Broadcast</code> which ARO handles internally.
+            </p>
+        </section>
+
+        <!-- Step 8: Repository Observer -->
+        <section id="observer" class="step">
+            <div class="step-header">
+                <div class="step-number">Step 8</div>
+                <h2>Cleanup Observer</h2>
+                <p class="step-intro">React when data changes</p>
+            </div>
+
+            <p class="narrative">
+                What happens when hundreds of messages pile up? We need automatic cleanup.
+                <strong>Repository observers</strong> let you react when data is stored, updated,
+                or deleted.
+            </p>
+
+            <p class="narrative">
+                We'll create an observer that triggers when the message count exceeds 40.
+                It keeps the 20 most recent messages and clears the rest.
+            </p>
+
+            <div class="code-file">
+                <div class="code-file-header">
+                    <div class="dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="filename">api.aro (part 3)</span>
+                </div>
+<pre><span class="comment">(* Repository Observer - cleanup when message count exceeds 40 *)</span>
+
+(<span class="keyword">Cleanup Messages</span>: <span class="keyword">message-repository Observer</span>) when <span class="variable">&lt;message-repository: count&gt;</span> &gt; 40 {
+    <span class="action">Retrieve</span> the <span class="variable">&lt;all-messages&gt;</span> from the <span class="variable">&lt;message-repository&gt;</span>.
+    <span class="action">Extract</span> the <span class="variable">&lt;keep-messages: 0-19&gt;</span> from the <span class="variable">&lt;all-messages&gt;</span>.
+    <span class="action">Clear</span> the <span class="variable">&lt;all&gt;</span> from the <span class="variable">&lt;message-repository&gt;</span>.
+    <span class="action">Store</span> the <span class="variable">&lt;keep-messages&gt;</span> into the <span class="variable">&lt;message-repository&gt;</span>.
+    <span class="action">Log</span> <span class="string">"Cleaned up messages, kept last 20"</span> to the <span class="variable">&lt;console&gt;</span>.
+    <span class="action">Return</span> an <span class="variable">&lt;OK: status&gt;</span> for the <span class="variable">&lt;cleanup&gt;</span>.
+}</pre>
+            </div>
+
+            <p class="narrative">
+                The <code>when</code> clause is a guard condition. The observer only fires when the
+                condition is true. <code>&lt;message-repository: count&gt;</code> returns the current
+                number of items in the repository.
+            </p>
+
+            <div class="callout">
+                <p>
+                    Without the <code>when</code> guard, the observer would fire on every store operation.
+                    The condition prevents unnecessary cleanup when there are few messages.
+                </p>
+            </div>
+        </section>
+
+        <!-- Step 9: Templates -->
+        <section id="templates" class="step">
+            <div class="step-header">
+                <div class="step-number">Step 9</div>
+                <h2>Templates</h2>
+                <p class="step-intro">Dynamic HTML rendering</p>
+            </div>
+
+            <p class="narrative">
+                ARO templates are HTML files with embedded expressions. Use
+                <code>{{ <root: oc> }} {{ <root: cc> }}</code> for values and <code>{{ <root: oc> }} for each {{ <root: cc> }}</code> for loops.
+            </p>
+
+            <div class="code-file">
+                <div class="code-file-header">
+                    <div class="dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="filename">templates/index.html</span>
+                </div>
+<pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;StatusPost&lt;/title&gt;
+    &lt;link rel="stylesheet" href="/static/style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;StatusPost&lt;/h1&gt;
+
+    &lt;div class="form"&gt;
+        &lt;form id="f"&gt;
+            &lt;input type="text" id="msg" placeholder="Message..." required&gt;
+            &lt;button type="submit"&gt;Post&lt;/button&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+
+    &lt;div id="status" class="disconnected"&gt;Connecting...&lt;/div&gt;
+
+    &lt;div id="messages"&gt;
+<span class="keyword">{{ <root: oc> }} for each &lt;msg&gt; in &lt;recent-messages&gt; { {{ <root: cc> }}</span>
+        &lt;div class="message"&gt;
+            &lt;div class="time"&gt;<span class="keyword">{{ <root: oc> }} &lt;msg: createdAt&gt; | date: "dd.MM.yyyy HH:mm" {{ <root: cc> }}</span>&lt;/div&gt;
+            &lt;div&gt;<span class="keyword">{{ <root: oc> }} &lt;msg: message&gt; {{ <root: cc> }}</span>&lt;/div&gt;
+        &lt;/div&gt;
+<span class="keyword">{{ <root: oc> }} } {{ <root: cc> }}</span>
+    &lt;/div&gt;
+
+    &lt;script src="/static/app.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+            </div>
+
+            <p class="narrative">
+                The template loops through <code>recent-messages</code> and renders each one.
+                The <code>| date:</code> filter formats the timestamp.
+            </p>
+
+            <p class="narrative">
+                The client-side JavaScript connects to WebSocket and updates the page in real-time:
+            </p>
+
+            <div class="code-file">
+                <div class="code-file-header">
+                    <div class="dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="filename">templates/static/app.js</span>
+                </div>
+<pre>var m = document.getElementById('messages');
+var s = document.getElementById('status');
+var f = document.getElementById('f');
+var i = document.getElementById('msg');
+
+function add(msg) {
+    var d = document.createElement('div');
+    d.className = 'message';
+    d.innerHTML = '&lt;div class="time"&gt;' + formatDate(msg.createdAt) + '&lt;/div&gt;' +
+                  '&lt;div&gt;' + escapeHtml(msg.message) + '&lt;/div&gt;';
+    m.insertBefore(d, m.firstChild);
+}
+
+var ws;
+function connect() {
+    var protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+    ws = new WebSocket(protocol + '//' + location.host + '/ws');
+
+    ws.onopen = function() {
+        s.textContent = 'Connected';
+        s.className = 'connected';
+    };
+
+    ws.onmessage = function(e) {
+        try { add(JSON.parse(e.data)); } catch(err) {}
+    };
+
+    ws.onclose = function() {
+        s.textContent = 'Disconnected';
+        s.className = 'disconnected';
+        setTimeout(connect, 3000);
+    };
+}
+connect();
+
+f.onsubmit = function(e) {
+    e.preventDefault();
+    var msg = i.value.trim();
+    if (!msg) return;
+    fetch('/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'message=' + encodeURIComponent(msg)
+    });
+    i.value = '';
+};</pre>
+            </div>
+        </section>
+
+        <!-- Step 10: Running It -->
+        <section id="run" class="step">
+            <div class="step-header">
+                <div class="step-number">Step 10</div>
+                <h2>Running It</h2>
+                <p class="step-intro">See it in action</p>
+            </div>
+
+            <p class="narrative">
+                With all files in place, run your application:
+            </p>
+
+            <div class="code-file">
+                <div class="code-file-header">
+                    <div class="dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="filename">Terminal</span>
+                </div>
+<pre>$ aro run ./StatusPost
+
+Starting StatusPost...
+StatusPost ready on http://localhost:8080
+WebSocket available on ws://localhost:8080/ws</pre>
+            </div>
+
+            <p class="narrative">
+                Open <code>http://localhost:8080</code> in your browser. Open another browser window.
+                Post a message. Watch it appear instantly in both windows.
+            </p>
+
+            <p class="narrative">
+                Post 41 messages. Watch the console log the cleanup. The observer keeps your
+                repository lean automatically.
+            </p>
+
+            <div class="callout">
+                <p>
+                    <strong>That's StatusPost.</strong> A real-time message board with HTTP, WebSocket,
+                    repositories, observers, and templates. All in about 50 lines of ARO code.
+                </p>
+            </div>
+
+            <p class="narrative">
+                The complete source code is available on GitHub:
+                <a href="https://github.com/arolang/example-web-chat" style="color: var(--color-accent);">arolang/example-web-chat</a>
+            </p>
+        </section>
+
+        <!-- Step 11: Build It -->
+        <section id="build" class="step">
+            <div class="step-header">
+                <div class="step-number">Step 11</div>
+                <h2>Build It</h2>
+                <p class="step-intro">Compile to a native binary</p>
+            </div>
+
+            <p class="narrative">
+                Running with <code>aro run</code> is great for development, but for production
+                you want a native binary. ARO compiles to LLVM IR and links against the runtime
+                to produce a standalone executable.
+            </p>
+
+            <div class="code-file">
+                <div class="code-file-header">
+                    <div class="dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="filename">Terminal</span>
+                </div>
+<pre>$ aro build ./StatusPost
+
+Compiling StatusPost...
+  Generating LLVM IR...
+  Compiling to object file...
+  Linking with runtime...
+
+Build complete: ./StatusPost/StatusPost
+
+$ ./StatusPost/StatusPost
+
+Starting StatusPost...
+StatusPost ready on http://localhost:8080
+WebSocket available on ws://localhost:8080/ws</pre>
+            </div>
+
+            <p class="narrative">
+                The compiled binary includes everything: your ARO code, the runtime, and all
+                dependencies. No interpreter needed. Just copy and run.
+            </p>
+
+            <div class="callout">
+                <p>
+                    Use <code>aro build --optimize</code> for release builds. This enables
+                    LLVM optimizations for smaller binaries and faster execution.
+                </p>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="final-cta">
+            <h2>Keep Building</h2>
+            <p>
+                You've built a real-time application. Now explore more of what ARO can do.
+            </p>
+            <div class="cta-buttons">
+                <a href="https://github.com/arolang/example-web-chat" class="btn btn-primary">View Source on GitHub</a>
+                <a href="docs.html" class="btn btn-secondary">Read the Docs</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-aro">ARO</span>
+                    <p>The ARO Programming Language</p>
+                    <p class="footer-tagline">Speak Business. Write Code.</p>
+                    <a href="imprint.html" class="footer-imprint">Imprint</a>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Learn</h4>
+                        <a href="getting-started.html">Getting Started</a>
+                        <a href="tutorial.html">Tutorial</a>
+                        <a href="showcase.html">Showcase</a>
+                        <a href="docs.html">Documentation</a>
+                        <a href="download.html">Download</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Community</h4>
+                        <a href="https://github.com/arolang/aro">GitHub</a>
+                        <a href="https://github.com/arolang/aro/issues">Issues</a>
+                        <a href="https://social.uitsmijter.io/@aro">Mastodon</a>
+                        <a href="disclaimer.html">Motivation & Disclaimer</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Obviously, this page is rendered with <a href="https://github.com/arolang/PageBuilder">ARO PageBuilder</a>.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Animation Scripts -->
+    <script src="animations.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,273 @@
+title: Documentation - ARO Programming Language
+
+# ── Subpage hero ───────────────────────────────────────────────────────
+docs_h1:   Documentation
+docs_lead: Everything you need to build amazing applications with ARO.
+
+# ── Quick links across the top ─────────────────────────────────────────
+quick_links_heading: "&#x26A1; Quick Links"
+quick_links:
+  - icon: "&#x1F680;"
+    label: Getting Started
+    href: getting-started.html
+  - icon: "&#x1F4D6;"
+    label: FDD History
+    href: fdd.html
+  - icon: "&#x1F4BB;"
+    label: GitHub Repo
+    href: 'https://github.com/arolang/aro'
+  - icon: "&#x1F4C2;"
+    label: Examples
+    href: 'https://github.com/arolang/aro/tree/main/Examples'
+
+# ── Doc sections, each a header + grid of cards ────────────────────────
+docs_sections:
+  - title: Learn ARO
+    subtitle: Start here if you're new to the language
+    cards:
+      - href: getting-started.html
+        class: doc-card animate-on-scroll stagger-1 hover-lift
+        icon: "&#x1F331;"
+        title: Getting Started
+        text: Build your first ARO application in 5 minutes. Learn the basics of features, feature sets, and contract-first development.
+        link: Start tutorial →
+      - href: fdd.html
+        class: doc-card animate-on-scroll stagger-2 hover-lift
+        icon: "&#x1F4DA;"
+        title: The FDD Story
+        text: Discover the history of Feature-Driven Development—the forgotten methodology that inspired ARO.
+        link: Read the story →
+      - href: tutorial.html
+        class: doc-card animate-on-scroll stagger-3 hover-lift
+        icon: "&#x1F30D;"
+        title: Tutorial
+        text: A hands-on tutorial building a complete ARO application step by step. Learn by doing.
+        link: Start tutorial →
+
+  - title: Core Concepts
+    subtitle: Deep dives into ARO's architecture
+    cards:
+      - href: docs/the-basics.html
+        class: doc-card animate-on-scroll stagger-1 hover-lift
+        icon: "&#x1F3AF;"
+        title: The Basics
+        text: Understand the Action-Result-Object pattern, prepositions, and how ARO statements work.
+        link: Learn basics →
+      - href: docs/feature-sets.html
+        class: doc-card animate-on-scroll stagger-2 hover-lift
+        icon: "&#x1F4E6;"
+        title: Feature Sets
+        text: How to organize your code into feature sets and manage business capabilities.
+        link: Learn feature sets →
+      - href: docs/actions.html
+        class: doc-card animate-on-scroll stagger-3 hover-lift
+        icon: "&#x26A1;"
+        title: Actions
+        text: The complete guide to ARO actions—Extract, Create, Validate, Store, Return, and more.
+        link: Explore actions →
+      - href: docs/application-lifecycle.html
+        class: doc-card animate-on-scroll stagger-4 hover-lift
+        icon: "&#x1F504;"
+        title: Application Lifecycle
+        text: Application-Start, Application-End, and how to manage your app's lifecycle.
+        link: Learn lifecycle →
+      - href: docs/packages.html
+        class: doc-card animate-on-scroll stagger-5 hover-lift
+        icon: "&#x1F4E6;"
+        title: Packages
+        text: Extend ARO with community packages. Install plugins, manage dependencies, and add new capabilities.
+        link: Learn packages →
+
+  - title: Powerful Features
+    subtitle: What makes ARO remarkable
+    cards:
+      - href: docs/event-driven.html
+        class: doc-card
+        icon: "&#x1F4E1;"
+        title: Event-Driven Architecture
+        text: Simple event dispatch between feature sets. Emit events by name, no subscriptions or complex pub/sub needed.
+        link: Learn events →
+      - href: docs/state-transitions.html
+        class: doc-card
+        icon: "&#x1F500;"
+        title: State Transitions
+        text: Manage state machines with OpenAPI enums and a simple Accept action. Runtime validates all transitions.
+        link: Learn states →
+      - href: docs/data-pipelines.html
+        class: doc-card
+        icon: "&#x1F4CA;"
+        title: Data Pipelines
+        text: Filter, transform, and aggregate collections with map/reduce style operations. All results typed via OpenAPI.
+        link: Learn pipelines →
+      - href: docs/native-compilation.html
+        class: doc-card
+        icon: "&#x26A1;"
+        title: Native Compilation
+        text: Compile ARO to LLVM IR and native binaries. Fast startup, lower memory, single binary deployment.
+        link: Learn compilation →
+      - href: docs/working-with-dates.html
+        class: doc-card
+        icon: "&#x1F4C5;"
+        title: Working with Dates
+        text: Date and time handling with timezone support, relative offsets, ranges, and recurrence patterns.
+        link: Learn dates →
+      - href: docs/set-operations.html
+        class: doc-card
+        icon: "&#x1F517;"
+        title: Set Operations
+        text: Compute intersections, differences, and unions on lists, strings, and objects with polymorphic operations.
+        link: Learn set ops →
+      - href: docs/metrics.html
+        class: doc-card
+        icon: "&#x1F4CA;"
+        title: Runtime Metrics
+        text: Built-in execution metrics with action counts, timing, and Prometheus-compatible export. Zero configuration.
+        link: Learn metrics →
+      - href: docs/streaming.html
+        class: doc-card
+        icon: "&#x1F30A;"
+        title: Streaming Execution
+        text: Process arbitrarily large datasets with constant memory. Same syntax, streaming under the hood.
+        link: Learn streaming →
+      - href: docs/repl.html
+        class: doc-card
+        icon: "&#x1F4BB;"
+        title: Interactive REPL
+        text: Explore ARO interactively. Execute statements, inspect results, and prototype features in real time.
+        link: Try the REPL →
+
+  - title: Building APIs
+    subtitle: Create powerful HTTP services with ARO
+    cards:
+      - href: docs/contract-first.html
+        class: doc-card
+        icon: "&#x1F4DC;"
+        title: Contract-First Development
+        text: How OpenAPI contracts drive your ARO applications. Define your API first, then implement.
+        link: Learn contract-first →
+      - href: docs/http-services.html
+        class: doc-card
+        icon: "&#x1F310;"
+        title: HTTP Client
+        text: Fetch data from external APIs with the Request action. GET, POST, PUT, DELETE and more.
+        link: Make HTTP requests →
+      - href: docs/file-operations.html
+        class: doc-card
+        icon: "&#x1F4C1;"
+        title: File Operations
+        text: Read, write, copy, move, and manage files and directories with cross-platform actions.
+        link: Learn file ops →
+      - href: docs/format-aware-io.html
+        class: doc-card
+        icon: "&#x1F5C4;"
+        title: Format-Aware File I/O
+        text: Automatic format detection and serialization for JSON, CSV, YAML, XML, TOML, and 8 more formats. Zero boilerplate.
+        link: Learn formats →
+      - href: docs/sockets.html
+        class: doc-card
+        icon: "&#x1F50C;"
+        title: TCP Sockets
+        text: Real-time communication with TCP sockets and bidirectional data flow for backend services.
+        link: Learn sockets →
+      - href: docs/websockets.html
+        class: doc-card
+        icon: "&#x1F4E1;"
+        title: WebSockets
+        text: Real-time bidirectional communication for web apps. Push updates to browsers instantly.
+        link: Learn WebSockets →
+      - href: docs/templates.html
+        class: doc-card
+        icon: "&#x1F4C4;"
+        title: Template Engine
+        text: Dynamic HTML generation with variable interpolation, conditionals, loops, and includes.
+        link: Learn templates →
+      - href: docs/terminal-ui.html
+        class: doc-card
+        icon: "&#x1F4BB;"
+        title: Terminal UI
+        text: Build interactive terminal applications with colors, styling, live updates, and reactive Watch patterns.
+        link: Learn Terminal UI →
+      - href: docs/repositories.html
+        class: doc-card
+        icon: "&#x1F5C3;"
+        title: Repositories
+        text: In-memory data storage with querying, updates, and change observers for reactive patterns.
+        link: Learn repositories →
+
+  - title: Reference
+    subtitle: Detailed specifications and proposals
+    cards:
+      - href: docs/language-proposals.html
+        class: doc-card
+        icon: "&#x1F4C3;"
+        title: Language Proposals
+        text: 60+ evolution proposals documenting every aspect of the ARO language design.
+        link: Browse proposals →
+      - href: docs/services.html
+        class: doc-card
+        icon: "&#x1F50C;"
+        title: External Services
+        text: Integrate with external APIs and libraries using the Call action. Create custom service plugins.
+        link: Learn services →
+      - href: docs/custom-actions.html
+        class: doc-card
+        icon: "&#x1F527;"
+        title: Creating Custom Actions
+        text: Extend ARO with your own actions. Learn the ActionImplementation protocol and registration.
+        link: Create actions →
+      - href: docs/event-driven.html
+        class: doc-card
+        icon: "&#x1F4E1;"
+        title: Events Guide
+        text: How to use events in ARO applications. Emit, handle, and compose event-driven systems.
+        link: Learn events →
+      - href: docs/writing-extensions.html
+        class: doc-card
+        icon: "&#x1F9E9;"
+        title: Writing Extensions
+        text: Create your own ARO packages with custom actions and feature sets. Share with the community.
+        link: Write extensions →
+
+# ── Nav / footer ───────────────────────────────────────────────────────
+nav_links:
+  - href: fdd.html
+    label: The FDD Story
+  - href: getting-started.html
+    label: Get Started
+  - href: tutorial.html
+    label: Tutorial
+  - href: showcase.html
+    label: Showcase
+  - href: docs.html
+    label: Docs
+    class_attr: ' style="color: var(--color-text);"'
+  - href: disclaimer.html
+    label: Motivation
+  - href: download.html
+    label: Download
+
+mobile_links:
+  - href: fdd.html
+    label: The FDD Story
+  - href: getting-started.html
+    label: Get Started
+  - href: tutorial.html
+    label: Tutorial
+  - href: showcase.html
+    label: Showcase
+  - href: docs.html
+    label: Docs
+  - href: disclaimer.html
+    label: Motivation
+  - href: download.html
+    label: Download
+
+
+tpl: shells/docs
+elements:
+  - tpl: organisms/nav
+  - tpl: organisms/mobile_menu
+  - tpl: organisms/docs_main
+  - tpl: atoms/progress_bar
+  - tpl: organisms/footer
+  - tpl: atoms/animation_scripts

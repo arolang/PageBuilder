@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>State Transitions - ARO Programming Language</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ARO - The programming language where features become code. Built for humans, perfected for AI.">
+    <!-- Open Graph / Social Share -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://arolang.github.io/aro/">
+    <meta property="og:title" content="ARO - The Language AI Was Waiting For">
+    <meta property="og:description" content="ARO is the programming language where features become code. Built for humans. Perfected for AI.">
+    <meta property="og:image" content="https://arolang.github.io/aro/social.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ARO - The Language AI Was Waiting For">
+    <meta name="twitter:description" content="ARO is the programming language where features become code. Built for humans. Perfected for AI.">
+    <meta name="twitter:image" content="https://arolang.github.io/aro/social.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../animations.css">
+    <link rel="stylesheet" href="../subpage.css">
+    <!-- Matomo -->
+    <script>
+        var _paq = window._paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function() {
+            var u="//matomo.benjamin.ausdertechnik.de/";
+            _paq.push(['setTrackerUrl', u+'matomo.php']);
+            _paq.push(['setSiteId', '4']);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+        })();
+    </script>
+    <!-- End Matomo Code -->
+
+    <style>
+        .doc-page {
+            padding: 120px 24px 80px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .doc-header {
+            margin-bottom: 48px;
+        }
+
+        .doc-header h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .doc-header .lead {
+            font-size: 1.25rem;
+            color: var(--color-text-muted);
+            line-height: 1.7;
+        }
+
+        .doc-page h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 48px 0 16px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .doc-page h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 32px 0 12px;
+            color: var(--color-secondary);
+        }
+
+        .doc-page p {
+            font-size: 1.1rem;
+            color: var(--color-text-muted);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .doc-page code {
+            font-family: var(--font-mono);
+            background: var(--color-bg-alt);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--color-secondary);
+        }
+
+        .doc-page pre {
+            background: var(--color-bg-alt);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            overflow-x: auto;
+            margin: 24px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .doc-page pre code {
+            background: none;
+            padding: 0;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: var(--color-text);
+        }
+
+        .doc-page ul {
+            color: var(--color-text-muted);
+            margin: 16px 0 16px 24px;
+            line-height: 1.8;
+        }
+
+        .doc-page li {
+            margin-bottom: 8px;
+        }
+
+        .doc-page strong {
+            color: var(--color-text);
+        }
+
+        .doc-page em {
+            color: var(--color-secondary);
+            font-style: normal;
+        }
+
+        .highlight-box {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin: 32px 0;
+        }
+
+        .highlight-box h4 {
+            color: var(--color-primary);
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0;
+        }
+
+        .state-flow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 32px 0;
+            padding: 24px;
+            background: var(--color-bg-alt);
+            border-radius: var(--radius-md);
+        }
+
+        .state-box {
+            background: rgba(6, 182, 212, 0.2);
+            border: 1px solid var(--color-secondary);
+            padding: 12px 20px;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--color-secondary);
+        }
+
+        .state-arrow {
+            color: var(--color-text-muted);
+            font-size: 1.5rem;
+        }
+
+        .code-comment { color: #6b7280; }
+        .code-keyword { color: #7c3aed; font-weight: 600; }
+        .code-string { color: #10b981; }
+        .code-feature { color: #f472b6; }
+        .code-result { color: #06b6d4; }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--color-text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--color-primary);
+        }
+
+        .error-example {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            margin: 24px 0;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: #f87171;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="/aro/" class="logo">
+                <span class="logo-aro">ARO</span>
+            </a>
+            <div class="nav-links">
+                <a href="../fdd.html">The FDD Story</a>
+                <a href="../getting-started.html">Get Started</a>
+                <a href="../docs.html" style="color: var(--color-text);">Docs</a>
+                <a href="../disclaimer.html">Motivation</a>
+                <a href="../download.html">Download</a>
+                <a href="https://github.com/arolang/aro" class="nav-github">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                    <span class="github-stars">
+                        <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+                        <span class="github-stars-count"></span>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="doc-page">
+        <a href="../docs.html" class="back-link">&#x2190; Back to Documentation</a>
+
+        <header class="doc-header">
+            <h1 class="gradient-text">State Transitions</h1>
+            <p class="lead">
+                ARO handles state machines elegantly: define states as OpenAPI enums,
+                transition with the <code>Accept</code> action, and let the runtime validate everything.
+            </p>
+        </header>
+
+        <div class="highlight-box">
+            <h4>States Are Just Enums</h4>
+            <p>
+                No special state machine syntax. No transition tables. Define your states in OpenAPI,
+                use <code>Accept</code> to transition, and get automatic validation with clear error messages.
+            </p>
+        </div>
+
+        <h2>State Machine Example</h2>
+        <p>
+            Consider an order lifecycle. Orders flow through these states:
+        </p>
+
+        <div class="state-flow">
+            <span class="state-box">draft</span>
+            <span class="state-arrow">&#x2192;</span>
+            <span class="state-box">placed</span>
+            <span class="state-arrow">&#x2192;</span>
+            <span class="state-box">paid</span>
+            <span class="state-arrow">&#x2192;</span>
+            <span class="state-box">shipped</span>
+            <span class="state-arrow">&#x2192;</span>
+            <span class="state-box">delivered</span>
+        </div>
+
+        <h2>Defining States in OpenAPI</h2>
+        <p>
+            States are defined as string enums in your <code>openapi.yaml</code>:
+        </p>
+
+        <pre><code><span class="code-comment"># openapi.yaml</span>
+openapi: 3.0.3
+info:
+  title: Order Management
+  version: 1.0.0
+
+components:
+  schemas:
+    OrderStatus:
+      type: string
+      enum:
+        - draft
+        - placed
+        - paid
+        - shipped
+        - delivered
+        - cancelled
+
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        customerId:
+          type: string
+      required:
+        - id
+        - status</code></pre>
+
+        <h2>The Accept Action</h2>
+        <p>
+            Use <code>Accept</code> to validate and apply state transitions.
+            The syntax clearly shows the expected transition:
+        </p>
+
+        <pre><code><span class="code-comment">(* Transition from draft to placed *)</span>
+<span class="code-keyword">Accept</span> the <span class="code-result">&lt;transition: draft_to_placed&gt;</span> on &lt;order: status&gt;.
+
+<span class="code-comment">(* Transition from placed to paid *)</span>
+<span class="code-keyword">Accept</span> the <span class="code-result">&lt;transition: placed_to_paid&gt;</span> on &lt;order: status&gt;.
+
+<span class="code-comment">(* Transition from paid to shipped *)</span>
+<span class="code-keyword">Accept</span> the <span class="code-result">&lt;transition: paid_to_shipped&gt;</span> on &lt;order: status&gt;.</code></pre>
+
+        <p>
+            The syntax uses <code>_to_</code> as the separator because <code>to</code> is a reserved preposition in ARO.
+        </p>
+
+        <h2>Complete Example</h2>
+        <p>
+            Here's how state transitions work in practice with order management:
+        </p>
+
+        <pre><code><span class="code-feature">(placeOrder: Order Management)</span> {
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;order-id&gt;</span> from the &lt;pathParameters: id&gt;.
+    <span class="code-keyword">Retrieve</span> the <span class="code-result">&lt;order&gt;</span> from the &lt;order-repository&gt;.
+
+    <span class="code-comment">(* Accept state transition from draft to placed *)</span>
+    <span class="code-keyword">Accept</span> the <span class="code-result">&lt;transition: draft_to_placed&gt;</span> on &lt;order: status&gt;.
+
+    <span class="code-keyword">Store</span> the &lt;order&gt; into the &lt;order-repository&gt;.
+    <span class="code-keyword">Emit</span> to <span class="code-feature">&lt;Send Order Confirmation&gt;</span> with &lt;order&gt;.
+    <span class="code-keyword">Return</span> an <span class="code-result">&lt;OK: status&gt;</span> with &lt;order&gt;.
+}
+
+<span class="code-feature">(payOrder: Order Management)</span> {
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;order-id&gt;</span> from the &lt;pathParameters: id&gt;.
+    <span class="code-keyword">Retrieve</span> the <span class="code-result">&lt;order&gt;</span> from the &lt;order-repository&gt;.
+
+    <span class="code-comment">(* Must be placed to accept payment *)</span>
+    <span class="code-keyword">Accept</span> the <span class="code-result">&lt;transition: placed_to_paid&gt;</span> on &lt;order: status&gt;.
+
+    <span class="code-keyword">Store</span> the &lt;order&gt; into the &lt;order-repository&gt;.
+    <span class="code-keyword">Return</span> an <span class="code-result">&lt;OK: status&gt;</span> with &lt;order&gt;.
+}
+
+<span class="code-feature">(shipOrder: Order Management)</span> {
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;order-id&gt;</span> from the &lt;pathParameters: id&gt;.
+    <span class="code-keyword">Retrieve</span> the <span class="code-result">&lt;order&gt;</span> from the &lt;order-repository&gt;.
+
+    <span class="code-comment">(* Must be paid to ship *)</span>
+    <span class="code-keyword">Accept</span> the <span class="code-result">&lt;transition: paid_to_shipped&gt;</span> on &lt;order: status&gt;.
+
+    <span class="code-keyword">Store</span> the &lt;order&gt; into the &lt;order-repository&gt;.
+    <span class="code-keyword">Emit</span> to <span class="code-feature">&lt;Send Shipping Notification&gt;</span> with &lt;order&gt;.
+    <span class="code-keyword">Return</span> an <span class="code-result">&lt;OK: status&gt;</span> with &lt;order&gt;.
+}</code></pre>
+
+        <h2>Error Handling</h2>
+        <p>
+            If the current state doesn't match the expected state, the runtime throws a clear error:
+        </p>
+
+        <div class="error-example">
+            Cannot accept state draft->placed on order: status. Current state is "paid".
+        </div>
+
+        <p>
+            This follows ARO's <em>"Code Is The Error Message"</em> philosophy. The error tells you exactly what
+            was expected and what was found.
+        </p>
+
+        <h2>Why This Approach?</h2>
+
+        <h3>Simplicity</h3>
+        <p>
+            No new keywords. No special constructs. Just OpenAPI enums + <code>Accept</code>.
+            Use standard control flow (<code>if</code>, <code>match</code>) for complex logic.
+        </p>
+
+        <h3>Clarity</h3>
+        <p>
+            The transition is explicit in the code. Reading
+            <code>Accept the &lt;transition: draft_to_placed&gt; on &lt;order: status&gt;</code>
+            tells you exactly what's happening.
+        </p>
+
+        <h3>Safety</h3>
+        <p>
+            The runtime validates:
+        </p>
+        <ul>
+            <li>Current state matches expected <code>from</code> state</li>
+            <li>Target state is a valid enum value</li>
+            <li>Field exists on the object</li>
+        </ul>
+
+        <h2>State Observers</h2>
+        <p>
+            State observers react to transitions after they occur. Use them for audit logging,
+            notifications, analytics, and side effects.
+        </p>
+
+        <h3>Observer Pattern</h3>
+        <p>
+            A feature set becomes a state observer when its business activity ends with <code>StateObserver</code>.
+            Add an optional transition filter in angle brackets to observe only specific transitions:
+        </p>
+
+        <pre><code><span class="code-comment">(* Observe ALL status field transitions *)</span>
+<span class="code-feature">(Audit Status: status StateObserver)</span> {
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;fromState&gt;</span> from the &lt;transition: fromState&gt;.
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;toState&gt;</span> from the &lt;transition: toState&gt;.
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;orderId&gt;</span> from the &lt;transition: entityId&gt;.
+    <span class="code-keyword">Log</span> the &lt;audit&gt; for the &lt;console&gt;
+        with <span class="code-string">"Order ${orderId}: ${fromState} -> ${toState}"</span>.
+    <span class="code-keyword">Return</span> an <span class="code-result">&lt;OK: status&gt;</span> for the &lt;audit&gt;.
+}
+
+<span class="code-comment">(* Observe ONLY draft->placed transition *)</span>
+<span class="code-feature">(Notify Placed: status StateObserver&lt;draft_to_placed&gt;)</span> {
+    <span class="code-keyword">Extract</span> the <span class="code-result">&lt;orderId&gt;</span> from the &lt;transition: entityId&gt;.
+    <span class="code-keyword">Log</span> the &lt;notification&gt; for the &lt;console&gt;
+        with <span class="code-string">"Order ${orderId} has been placed!"</span>.
+    <span class="code-keyword">Return</span> an <span class="code-result">&lt;OK: status&gt;</span> for the &lt;notification&gt;.
+}</code></pre>
+
+        <h3>Transition Data</h3>
+        <p>
+            Observers access transition information via the <code>&lt;transition&gt;</code> object:
+        </p>
+
+        <ul>
+            <li><code>transition: fieldName</code> - The field that changed (e.g., "status")</li>
+            <li><code>transition: objectName</code> - The object type (e.g., "order")</li>
+            <li><code>transition: fromState</code> - Previous state value</li>
+            <li><code>transition: toState</code> - New state value</li>
+            <li><code>transition: entityId</code> - Entity ID if available</li>
+            <li><code>transition: entity</code> - Full object after transition</li>
+        </ul>
+
+        <h3>Use Cases</h3>
+        <ul>
+            <li><strong>Audit logging</strong> - Record all state changes for compliance</li>
+            <li><strong>Notifications</strong> - Alert customers when orders ship</li>
+            <li><strong>Analytics</strong> - Track state transition metrics</li>
+            <li><strong>Side effects</strong> - Trigger downstream processes</li>
+        </ul>
+
+        <div class="highlight-box">
+            <h4>Observer Semantics</h4>
+            <p>
+                Observers execute <em>after</em> the transition succeeds. Multiple observers
+                can react to the same transition. Observers run in isolation - failures
+                don't affect the <code>Accept</code> action or other observers.
+            </p>
+        </div>
+
+        <div class="highlight-box">
+            <h4>Learn More</h4>
+            <p>
+                See the full state objects specification in
+                <a href="https://github.com/arolang/aro/blob/main/Proposals/ARO-0013-state-machines.md">ARO-0013: State Objects</a>.
+            </p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>Obviously, this page is rendered with <a href="https://github.com/arolang/PageBuilder">ARO PageBuilder</a>.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

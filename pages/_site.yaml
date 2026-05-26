@@ -1,0 +1,33 @@
+# Site-wide defaults merged into every page's root data before the
+# template is rendered. A page yaml can override any of these fields by
+# defining the same key locally.
+#
+# The leading underscore tells PageBuilder this file is config, not a
+# page — it is not walked into a build target.
+
+# ── Footer ──────────────────────────────────────────────────────────────
+footer_brand:   The ARO Programming Language
+footer_tagline: Speak Business. Write Code.
+footer_bottom:  'Obviously, this page is rendered with <a href="https://github.com/arolang/PageBuilder">ARO PageBuilder</a>.'
+
+footer_learn:
+  - href: getting-started.html
+    label: Getting Started
+  - href: tutorial.html
+    label: Tutorial
+  - href: showcase.html
+    label: Showcase
+  - href: docs.html
+    label: Documentation
+  - href: download.html
+    label: Download
+
+footer_community:
+  - href: 'https://github.com/arolang/aro'
+    label: GitHub
+  - href: 'https://github.com/arolang/aro/issues'
+    label: Issues
+  - href: 'https://social.uitsmijter.io/@aro'
+    label: Mastodon
+  - href: disclaimer.html
+    label: Motivation & Disclaimer

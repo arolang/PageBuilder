@@ -1,0 +1,17 @@
+            <div class="homebrew-install" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: var(--radius-md); padding: 32px; margin-bottom: 32px;">
+                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                    <span style="font-size: 2rem;">{{ <el: icon> }}</span>
+                    <div>
+                        <h3 style="font-size: 1.3rem; font-weight: 600; margin: 0;">{{ <el: title> }}</h3>
+                        <span style="color: var(--color-emerald); font-size: 0.9rem; font-weight: 500;">{{ <el: tag> }}</span>
+                    </div>
+                </div>
+                <p style="color: var(--color-text-muted); margin-bottom: 16px;">
+                    {{ <el: intro> }}
+                </p>
+                <div class="code-block" style="margin: 0; position: relative;">
+                    <pre style="margin: 0;">{{ <el: command> }}</pre>
+                    <button onclick="navigator.clipboard.writeText('{{ <el: command_js> }}')" style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.1); border: none; padding: 6px 12px; border-radius: 4px; color: var(--color-text-muted); cursor: pointer; font-size: 0.8rem;" title="Copy to clipboard">Copy</button>
+                </div>
+            </div>
+

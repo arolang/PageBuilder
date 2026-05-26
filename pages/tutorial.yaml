@@ -1,0 +1,9 @@
+# Tutorial body has unique structure (a dot-nav, gradient hero, custom
+# main layout) AND its prose talks ABOUT ARO templates, so it contains
+# literal `{{` / `}}` sequences. The whole page sits in a single full-
+# page template `shell_tutorial.html`; the literal braces are wired up
+# through the two single-character fields below.
+title: Build StatusPost - A Real-Time Chat Tutorial
+oc: "{{"
+cc: "}}"
+tpl: shells/tutorial

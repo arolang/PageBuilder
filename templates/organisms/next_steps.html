@@ -1,0 +1,9 @@
+        <div class="next-steps animate-on-scroll glass-card">
+            <h3>{{ <el: heading> }}</h3>
+            <p>
+                {{ <el: intro> }}
+            </p>
+            <div class="next-links">
+{{ for each <b> in <el: buttons> { }}                <a href="{{ <b: href> }}" class="{{ <b: class> }}">{{ <b: label> }}</a>
+{{ } }}            </div>
+        </div>

@@ -1,0 +1,51 @@
+title: Imprint - ARO Programming Language
+
+# ── Navigation (same as the home page) ──────────────────────────────────
+nav_links:
+  - href: fdd.html
+    label: The FDD Story
+  - href: getting-started.html
+    label: Get Started
+  - href: tutorial.html
+    label: Tutorial
+  - href: showcase.html
+    label: Showcase
+  - href: docs.html
+    label: Docs
+  - href: disclaimer.html
+    label: Motivation
+  - href: download.html
+    label: Download
+
+mobile_links:
+  - href: fdd.html
+    label: The FDD Story
+  - href: getting-started.html
+    label: Get Started
+  - href: tutorial.html
+    label: Tutorial
+  - href: showcase.html
+    label: Showcase
+  - href: docs.html
+    label: Docs
+  - href: disclaimer.html
+    label: Motivation
+  - href: download.html
+    label: Download
+
+# ── Subpage hero ────────────────────────────────────────────────────────
+hero_heading: Imprint
+hero_lead: Legal information and contact details.
+
+# ── Footer (identical to the home page) ─────────────────────────────────
+
+# ── Page composition ────────────────────────────────────────────────────
+tpl: shells/imprint
+elements:
+  - tpl: organisms/nav
+  - tpl: organisms/mobile_menu
+  - tpl: organisms/subpage_hero
+  - tpl: organisms/imprint_main
+  - tpl: atoms/progress_bar
+  - tpl: organisms/footer
+  - tpl: atoms/animation_scripts

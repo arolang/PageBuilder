@@ -1,0 +1,26 @@
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-aro">ARO</span>
+                    <p>{{ <root: footer_brand> }}</p>
+                    <p class="footer-tagline">{{ <root: footer_tagline> }}</p>
+                    <a href="imprint.html" class="footer-imprint">Imprint</a>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Learn</h4>
+{{ for each <link> in <root: footer_learn> { }}                        <a href="{{ <link: href> }}">{{ <link: label> }}</a>
+{{ } }}                    </div>
+                    <div class="footer-col">
+                        <h4>Community</h4>
+{{ for each <link> in <root: footer_community> { }}                        <a href="{{ <link: href> }}">{{ <link: label> }}</a>
+{{ } }}                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>{{ <root: footer_bottom> }}</p>
+            </div>
+        </div>
+    </footer>
+

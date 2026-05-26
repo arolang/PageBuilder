@@ -1,0 +1,28 @@
+    <header class="subpage-hero">
+        <div class="container">
+            <h1><span class="accent">{{ <root: docs_h1> }}</span></h1>
+            <p class="lead animate-on-scroll">
+                {{ <root: docs_lead> }}
+            </p>
+        </div>
+    </header>
+
+    <main class="docs-content">
+        <div class="quick-links animate-on-scroll glass-card">
+            <h3>{{ <root: quick_links_heading> }}</h3>
+            <div class="quick-links-grid">
+{{ for each <link> in <root: quick_links> { }}{{ Include the <result> from the <template: molecules/quick_link.html>. }}{{ } }}            </div>
+        </div>
+
+{{ for each <section> in <root: docs_sections> { }}        <section>
+            <div class="section-header">
+                <h2>{{ <section: title> }}</h2>
+                <p>{{ <section: subtitle> }}</p>
+            </div>
+
+            <div class="docs-grid">
+{{ for each <card> in <section: cards> { }}{{ Include the <result> from the <template: molecules/doc_card.html>. }}{{ } }}            </div>
+        </section>
+
+{{ } }}    </main>
+

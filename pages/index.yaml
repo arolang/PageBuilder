@@ -1,0 +1,96 @@
+title: ARO - The Language AI Was Waiting For
+
+# ── Navigation (top + mobile menu use the same set of links) ────────────
+nav_links:
+  - href: fdd.html
+    label: The FDD Story
+  - href: getting-started.html
+    label: Get Started
+  - href: tutorial.html
+    label: Tutorial
+  - href: showcase.html
+    label: Showcase
+  - href: docs.html
+    label: Docs
+  - href: disclaimer.html
+    label: Motivation
+  - href: download.html
+    label: Download
+
+mobile_links:
+  - href: fdd.html
+    label: The FDD Story
+  - href: getting-started.html
+    label: Get Started
+  - href: tutorial.html
+    label: Tutorial
+  - href: showcase.html
+    label: Showcase
+  - href: docs.html
+    label: Docs
+  - href: disclaimer.html
+    label: Motivation
+  - href: download.html
+    label: Download
+
+# ── Hero section content ────────────────────────────────────────────────
+hero_badge: A New Programming Language
+hero_subtitle: "ARO is where <em>features</em> become code.<br>\n                Built for humans. <strong>Perfected for AI.</strong>"
+hero_diagram_caption: Write plugins in <em>any language</em>. Compile to a <strong>standalone binary</strong>.
+hero_buttons:
+  - href: getting-started.html
+    class: btn btn-primary
+    inner: "\n                    <svg class=\"btn-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><polygon points=\"13 2 3 14 12 14 11 22 21 10 12 10 13 2\"></polygon></svg>\n                    Get Started\n                "
+  - href: fdd.html
+    class: btn btn-secondary
+    inner: Learn More
+
+# ── Features section ────────────────────────────────────────────────────
+features_title: '<span class="accent">Action.</span> <span class="accent">Result.</span> <span class="accent">Object.</span>'
+features_subtitle: Every statement follows the natural pattern of how we describe work.
+feature_cards:
+  - stagger: 1
+    icon: "01"
+    title: Features First
+    text: Write code the way you write user stories. Each feature set maps directly to a business capability.
+    code: 'Extract the &lt;user&gt; from the &lt;request&gt;.'
+  - stagger: 2
+    icon: "02"
+    title: AI Native
+    text: The first language designed for AI collaboration. Natural language syntax that LLMs understand.
+    code: 'Validate the &lt;data&gt; against &lt;schema&gt;.'
+  - stagger: 3
+    icon: "03"
+    title: Contract First
+    text: Your OpenAPI contract is your routing table. Define your API, ARO handles the rest.
+    code: 'Extract the &lt;id&gt; from the &lt;pathParameters: id&gt;.'
+
+# ── Call-to-action section ──────────────────────────────────────────────
+cta_title: Ready to <span class="accent">Build</span>?
+cta_subtitle: Join the developers writing the future<br />one feature at a time.
+cta_buttons:
+  - href: getting-started.html
+    class: btn btn-primary btn-large
+    inner: "\n                    <svg class=\"btn-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><polygon points=\"13 2 3 14 12 14 11 22 21 10 12 10 13 2\"></polygon></svg>\n                    Get Started\n                "
+  - href: fdd.html
+    class: btn btn-outline btn-large
+    inner: Read the Story
+
+# ── Footer ──────────────────────────────────────────────────────────────
+
+# ── Page composition: templates rendered in order into <body> ──────────
+tpl: shells/index
+elements:
+  - tpl: atoms/cursor_glow
+  - tpl: organisms/nav
+  - tpl: organisms/mobile_menu
+  - tpl: organisms/hero_index
+  - tpl: organisms/section_streaming
+  - tpl: organisms/section_features
+  - tpl: organisms/section_ai
+  - tpl: organisms/section_examples
+  - tpl: organisms/section_cta
+  - tpl: atoms/progress_bar
+  - tpl: organisms/footer
+  - tpl: atoms/animation_scripts
+  - tpl: atoms/inline_scripts_index

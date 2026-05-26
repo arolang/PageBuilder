@@ -1,0 +1,43 @@
+# Design tokens for the generated styles.css. Edit any value and rerun
+# `aro run . --input ./pages` to regenerate pages/styles.css.
+
+# Backgrounds
+color_bg:          "#000000"
+color_bg_alt:      "#050505"
+color_bg_elevated: "#0a0a0a"
+
+# Text
+color_text:        "#ffffff"
+color_text_muted:  "#888888"
+
+# Accent (the bright green that gives ARO its identity)
+color_accent:      "#00ff88"
+color_accent_dim:  "rgba(0, 255, 136, 0.15)"
+color_accent_glow: "rgba(0, 255, 136, 0.4)"
+
+# Borders
+color_border:       "#1a1a1a"
+color_border_light: "#333333"
+
+# Typography
+font_mono: "'JetBrains Mono', 'SF Mono', 'Fira Code', 'Consolas', monospace"
+
+# Spacing scale
+space_xs:  "4px"
+space_sm:  "8px"
+space_md:  "16px"
+space_lg:  "32px"
+space_xl:  "64px"
+space_2xl: "120px"
+
+# Radii
+radius_sm: "4px"
+radius_md: "8px"
+radius_lg: "12px"
+
+# Shadow used for hover glow
+shadow_glow: "0 8px 32px rgba(0, 255, 136, 0.2)"
+
+# Tell PageBuilder to use the css template and write pages/styles.css
+tpl: atoms/styles_tokens.css
+output_ext: css

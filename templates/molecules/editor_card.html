@@ -1,0 +1,13 @@
+                <div class="editor-card">
+                    <div class="editor-icon">{{ <el: icon> }}</div>
+                    <div>
+                        <h3>{{ <el: title> }}</h3>
+                        <p>{{ <el: tagline> }}</p>
+                        <ul class="feature-list">
+{{ for each <f> in <el: features> { }}                            <li>{{ <f> }}</li>
+{{ } }}                        </ul>
+                        <a href="{{ <el: href> }}" class="editor-link">
+                            {{ <el: link_label> }} &#x2192;
+                        </a>
+                    </div>
+                </div>
