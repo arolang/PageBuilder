@@ -145,7 +145,6 @@
 
 (Build Page: BuildOne Handler) {
     Extract the <yaml-path> from the <event: path>.
-    Extract the <src-root>  from the <event: src_root>.
     Extract the <dst-root>  from the <event: dst_root>.
     Extract the <site>      from the <event: site>.
 
