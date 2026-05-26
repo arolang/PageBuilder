@@ -199,6 +199,15 @@ aro build ./PageBuilder --optimize -o pagebuilder
 ./pagebuilder --input /some/yaml/dir --watch true
 ```
 
+> **Heads-up:** PageBuilder's recursive renderer uses two user-defined
+> actions (`Application.BuildAll`, `Application.RenderElement`). The
+> ARO interpreter (`aro run`) registers user-defined actions at
+> startup; `aro build` does not yet emit that registration into the
+> compiled binary, so today the binary aborts with
+> `Unknown action verb: 'application.buildall'`. Track or chase this in
+> ARO core. Until then, deploy by shipping the interpreter — `aro run`
+> finishes the whole site in well under a second anyway.
+
 ## Performance notes
 
 PageBuilder builds the whole ARO website — 9 HTML pages + the design-token
